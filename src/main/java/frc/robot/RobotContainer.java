@@ -4,13 +4,19 @@
 
 package frc.robot;
 
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-
-import frc.robot.utils.Vector2;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSwerve;
+import frc.robot.utils.Vector2;
 
 public class RobotContainer {
     // That logitech scary airplane looking thing
@@ -18,26 +24,26 @@ public class RobotContainer {
     DriveSwerve m_driveSwerve = new DriveSwerve();
 
     public RobotContainer() {
+        CameraServer.startAutomaticCapture(0);
+        CameraServer.startAutomaticCapture(1);
         configureBindings();
-
-        m_driveSwerve.setDefaultCommand(
-            // Inline command instantiation--will run a lot forever. Runs first lambda arg
-            // as command code and locks following args as requirements
-            new RunCommand(
-                () -> m_driveSwerve.drive(
-                    new Vector2(
-                        -m_driverJoystick.getY(),
-                        -m_driverJoystick.getX()
-                    ).deadband(Constants.HID.driverJoystickDeadband),
-                    -m_driverJoystick.getTwist(),
-                    false
-                ),
-                m_driveSwerve
-            )
-        );
     }
 
     private void configureBindings() {
+        JoystickButton resetEncoderButton = new JoystickButton(m_driverJoystick, 7);
+        resetEncoderButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
+
+        m_driveSwerve.setDefaultCommand(
+                // Inline command instantiation--will run a lot forever. Runs first lambda arg
+                // as command code and locks following args as requirements
+                new RunCommand(
+                        () -> m_driveSwerve.drive(
+                                new Vector2(
+                                        -m_driverJoystick.getY(),
+                                        -m_driverJoystick.getX()).deadband(Constants.HID.driverJoystickDeadband),
+                                -m_driverJoystick.getTwist(),
+                                !m_driverJoystick.getRawButton(1)),
+                        m_driveSwerve));
     }
 
     public Command getAutonomousCommand() {

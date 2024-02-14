@@ -18,6 +18,10 @@ public class Vector2 {
     static public Vector2 Zero() {
         return new Vector2(0.0, 0.0);
     }
+
+    static public Vector2 fromArray(double[] arr) {
+        return new Vector2(arr[0], arr[1]);
+    }
     
     public Vector2 deadband(double threshold) {
         return new Vector2(
@@ -73,5 +77,13 @@ public class Vector2 {
 
     public Vector2 div_by(double that) {
         return vectorOp(that, (a, b) -> a / b);
+    }
+
+    public double magnitude() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    public Vector2 normalized() {
+        return this.div_by(this.magnitude());
     }
 }
