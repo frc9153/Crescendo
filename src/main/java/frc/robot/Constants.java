@@ -12,6 +12,10 @@ public class Constants {
         public static final double driverJoystickDeadband = 0.1;
     }
 
+    public class Spittoon {
+        public static final int spittoonId = 9;
+    }
+
     public class Drive {
         public static final double maxSpeedMetersPerSec = 1.0; // Please do not kill anyone with this
         public static final double maxRotSpeedRadsPerSec = Math.PI;
