@@ -7,12 +7,14 @@
 
 package frc.robot.subsystems;
 
-import java.util.Arrays;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.networktables.DoubleArraySubscriber;
 import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Vector2;
 
@@ -23,6 +25,7 @@ public class NetworktableReader extends SubsystemBase {
     private final DriveSwerve m_driveSwerve;
     private final DoubleArraySubscriber m_vectorSub;
     private final DoubleSubscriber m_badumpTokenSub;
+    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
     public NetworktableReader(DriveSwerve driveswerve) {
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -41,6 +44,10 @@ public class NetworktableReader extends SubsystemBase {
         double timeSinceBadump = System.currentTimeMillis() - m_lastBadump;
         double badump = m_badumpTokenSub.get();
 
+        SmartDashboard.putNumber("GYRO_X", gyro.getDisplacementX());
+        SmartDashboard.putNumber("GYRO_Y", gyro.getDisplacementY());
+        SmartDashboard.putNumber("GYRO_Z", gyro.getDisplacementZ());
+
         if (m_lastBadumpToken == m_lastBadump) {
             System.out.println("[fatal] STUPID TOKEN DOESN'T MATCH STUPID OVER TOKEN!!!!!!!!!!!111!!");
             m_pause = true;
@@ -51,6 +58,7 @@ public class NetworktableReader extends SubsystemBase {
             return;
         }
 
-        m_driveSwerve.drive(moveVector.normalized(), moveVector.magnitude(), true);
+        // TODO:
+        // m_driveSwerve.drive(moveVector.normalized(), moveVector.magnitude(), true);
     }
 }

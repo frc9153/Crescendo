@@ -14,6 +14,14 @@ public class Constants {
 
     public class Spittoon {
         public static final int spittoonId = 9;
+        // TODO: TUNE
+        public static final double spittoonP = 10.0;
+        public static final double spittoonI = 0.0;
+        public static final double spittoonD = 0.0;
+        public static final double spittoonFF = 0.0;
+        public static final double spittoonIZone= 0.0;
+        public static final double spittoonMinSpeed = -0.5;
+        public static final double spittoonMaxSpeed = 0.5;
     }
 
     public class Drive {
@@ -21,8 +29,6 @@ public class Constants {
         public static final double maxRotSpeedRadsPerSec = Math.PI;
 
         public class Chassis {
-            // TODO: FILLIN
-
             // Distance between centers of right and left wheels
             public static final double trackWidth = Units.inchesToMeters(21.5);
             // Distance between front and back wheels

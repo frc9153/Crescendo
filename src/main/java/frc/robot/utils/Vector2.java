@@ -22,6 +22,10 @@ public class Vector2 {
     static public Vector2 fromArray(double[] arr) {
         return new Vector2(arr[0], arr[1]);
     }
+
+    public Vector2 graft() { 
+        return new Vector2(x, y);
+    }
     
     public Vector2 deadband(double threshold) {
         return new Vector2(

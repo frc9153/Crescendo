@@ -16,12 +16,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSwerve;
+import frc.robot.subsystems.NetworktableReader;
+import frc.robot.subsystems.Spittoon;
 import frc.robot.utils.Vector2;
 
 public class RobotContainer {
     // That logitech scary airplane looking thing
     Joystick m_driverJoystick = new Joystick(Constants.HID.driverJoystickPort);
     DriveSwerve m_driveSwerve = new DriveSwerve();
+    Spittoon m_spittoon = new Spittoon();
+    NetworktableReader m_networkTableReader = new NetworktableReader(m_driveSwerve);
 
     public RobotContainer() {
         CameraServer.startAutomaticCapture(0);
@@ -32,6 +36,12 @@ public class RobotContainer {
     private void configureBindings() {
         JoystickButton resetEncoderButton = new JoystickButton(m_driverJoystick, 7);
         resetEncoderButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
+
+        JoystickButton lockAndFireButton = new JoystickButton(m_driverJoystick, 5);
+        lockAndFireButton.onTrue(
+            new InstantCommand(() -> m_spittoon.startFireSequence(), m_spittoon)
+        );
+
 
         m_driveSwerve.setDefaultCommand(
                 // Inline command instantiation--will run a lot forever. Runs first lambda arg
