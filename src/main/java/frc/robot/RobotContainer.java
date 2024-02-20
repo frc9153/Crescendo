@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSwerve;
 import frc.robot.subsystems.NetworktableReader;
 import frc.robot.subsystems.Spittoon;
+import frc.robot.subsystems.UpAndDownForever;
 import frc.robot.utils.Vector2;
 
 public class RobotContainer {
@@ -25,6 +26,7 @@ public class RobotContainer {
     Joystick m_driverJoystick = new Joystick(Constants.HID.driverJoystickPort);
     DriveSwerve m_driveSwerve = new DriveSwerve();
     Spittoon m_spittoon = new Spittoon();
+    UpAndDownForever m_upDown = new UpAndDownForever();
     NetworktableReader m_networkTableReader = new NetworktableReader(m_driveSwerve);
 
     public RobotContainer() {

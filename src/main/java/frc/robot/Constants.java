@@ -11,6 +11,33 @@ public class Constants {
         public static final int driverJoystickPort = 0;
         public static final double driverJoystickDeadband = 0.1;
     }
+    
+    public class UpDownForever {
+        public static final int upDownMotorId = 10;
+        public static final double upDownP = 10.0;
+        public static final double upDownI = 0.0;
+        public static final double upDownD = 0.0;
+        public static final double upDownIZone = 0.0;
+        public static final double upDownFF = 0.0;
+        public static final double upDownMaxSpeed = 0.2;
+        public static final double upDownPIDEpsilon = 0.05;
+
+        public enum Setpoint {
+            INTAKE(0.5),
+            SHOOT(1.0),
+            STORE(1.5),
+            AMP(2.0);
+
+            private final double targetPosition;
+            private Setpoint(double targetPosition) {
+                this.targetPosition = targetPosition;
+            }
+
+            public final double targetPosition() {
+                return targetPosition;
+            }
+        };
+    }
 
     public class Spittoon {
         public static final int spittoonId = 9;
@@ -19,8 +46,7 @@ public class Constants {
         public static final double spittoonI = 0.0;
         public static final double spittoonD = 0.0;
         public static final double spittoonFF = 0.0;
-        public static final double spittoonIZone= 0.0;
-        public static final double spittoonMinSpeed = -0.5;
+        public static final double spittoonIZone = 0.0;
         public static final double spittoonMaxSpeed = 0.5;
     }
 
