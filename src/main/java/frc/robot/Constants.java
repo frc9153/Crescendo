@@ -14,7 +14,7 @@ public class Constants {
     
     public class UpDownForever {
         public static final int upDownMotorId = 10;
-        public static final double upDownP = 10.0;
+        public static final double upDownP = 5.0;
         public static final double upDownI = 0.0;
         public static final double upDownD = 0.0;
         public static final double upDownIZone = 0.0;
@@ -23,10 +23,10 @@ public class Constants {
         public static final double upDownPIDEpsilon = 0.05;
 
         public enum Setpoint {
-            INTAKE(0.5),
-            SHOOT(1.0),
-            STORE(1.5),
-            AMP(2.0);
+            INTAKE(0.25),
+            SHOOT(0.189),
+            STORE(0.100),
+            AMP(0.0);
 
             private final double targetPosition;
             private Setpoint(double targetPosition) {

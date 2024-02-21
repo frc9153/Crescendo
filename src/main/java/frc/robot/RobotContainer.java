@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.UpDownCommand;
 import frc.robot.subsystems.DriveSwerve;
 import frc.robot.subsystems.NetworktableReader;
 import frc.robot.subsystems.Spittoon;
@@ -30,20 +31,25 @@ public class RobotContainer {
     NetworktableReader m_networkTableReader = new NetworktableReader(m_driveSwerve);
 
     public RobotContainer() {
-        CameraServer.startAutomaticCapture(0);
-        CameraServer.startAutomaticCapture(1);
+        // CameraServer.startAutomaticCapture(0);
+        // CameraServer.startAutomaticCapture(1);
         configureBindings();
     }
 
     private void configureBindings() {
-        JoystickButton resetEncoderButton = new JoystickButton(m_driverJoystick, 7);
+        JoystickButton resetEncoderButton = new JoystickButton(m_driverJoystick, 9);
         resetEncoderButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
 
-        JoystickButton lockAndFireButton = new JoystickButton(m_driverJoystick, 5);
-        lockAndFireButton.onTrue(
-            new InstantCommand(() -> m_spittoon.startFireSequence(), m_spittoon)
-        );
+        JoystickButton armMed = new JoystickButton(m_driverJoystick, 7);
+        armMed.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.STORE));
 
+        // JoystickButton lockAndFireButton = new JoystickButton(m_driverJoystick, 5);
+        // lockAndFireButton.onTrue(
+        //     new InstantCommand(() -> m_spittoon.startFireSequence(), m_spittoon)
+        // );
+
+        // JoystickButton somethingButton = new JoystickButton(m_driverJoystick, 7);
+        // resetEncoderButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
 
         m_driveSwerve.setDefaultCommand(
                 // Inline command instantiation--will run a lot forever. Runs first lambda arg
