@@ -10,16 +10,24 @@ public class Constants {
     public class HID {
         public static final int driverJoystickPort = 0;
         public static final double driverJoystickDeadband = 0.1;
+
+        public class Binds {
+            public static final int resetSwerveHeadingButton = 9;
+            public static final int armStoreButton = 7;
+            // TODO: I have no idea what these button ids map to
+            public static final int esophagusFeedButton = 6;
+            public static final int archerfishFireButton = 5;
+        }
     }
     
     public class UpDownForever {
         public static final int upDownMotorId = 10;
-        public static final double upDownP = 5.0;
+        public static final double upDownP = 7.0;
         public static final double upDownI = 0.0;
         public static final double upDownD = 0.0;
         public static final double upDownIZone = 0.0;
         public static final double upDownFF = 0.0;
-        public static final double upDownMaxSpeed = 0.2;
+        public static final double upDownMaxSpeed = 0.3;
         public static final double upDownPIDEpsilon = 0.05;
 
         public enum Setpoint {
@@ -39,15 +47,15 @@ public class Constants {
         };
     }
 
-    public class Spittoon {
-        public static final int spittoonId = 9;
-        // TODO: TUNE
-        public static final double spittoonP = 10.0;
-        public static final double spittoonI = 0.0;
-        public static final double spittoonD = 0.0;
-        public static final double spittoonFF = 0.0;
-        public static final double spittoonIZone = 0.0;
-        public static final double spittoonMaxSpeed = 0.5;
+    public class Esophagus {
+        public static final int esophagusId = 9;
+        public static final double esophagusSpeed = 0.4;
+    }
+
+    public class Archerfish {
+        public static final int archerfishId = 11;
+        // "0.4 is the one that hit the ceiling light" -Cedric, hours ago
+        public static final double archerfishSpeed = 0.2;
     }
 
     public class Drive {

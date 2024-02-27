@@ -4,52 +4,60 @@
 
 package frc.robot;
 
-import javax.swing.text.StyleContext.SmallAttributeSet;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.UpDownCommand;
+import frc.robot.subsystems.Archerfish;
 import frc.robot.subsystems.DriveSwerve;
+import frc.robot.subsystems.Esophagus;
 import frc.robot.subsystems.NetworktableReader;
-import frc.robot.subsystems.Spittoon;
 import frc.robot.subsystems.UpAndDownForever;
 import frc.robot.utils.Vector2;
 
 public class RobotContainer {
-    // That logitech scary airplane looking thing
-    Joystick m_driverJoystick = new Joystick(Constants.HID.driverJoystickPort);
+    Joystick m_driverJoystick = new Joystick(Constants.HID.driverJoystickPort); // That logitech scary airplane looking thing
     DriveSwerve m_driveSwerve = new DriveSwerve();
-    Spittoon m_spittoon = new Spittoon();
-    UpAndDownForever m_upDown = new UpAndDownForever();
+    Esophagus m_esophagus = new Esophagus(); // Green-wheeled feeding machine
+    UpAndDownForever m_upDown = new UpAndDownForever(); // Shoulder type thing
+    Archerfish m_archerfish = new Archerfish(); // Fast spinning shootey bit
     NetworktableReader m_networkTableReader = new NetworktableReader(m_driveSwerve);
 
     public RobotContainer() {
-        // CameraServer.startAutomaticCapture(0);
-        // CameraServer.startAutomaticCapture(1);
+        yankEveryCameraFeedWeCanLikeThatFatGuyFromYakuzaThatLivesUnderTheRiver();
         configureBindings();
     }
 
+    private void yankEveryCameraFeedWeCanLikeThatFatGuyFromYakuzaThatLivesUnderTheRiver() {
+        // If it thinks we have 10 cameras something is very wrong or we got rich
+        // TODO: If rich, update accordingly
+        for (int i=0; i<10; i++) {
+            try {
+                CameraServer.startAutomaticCapture(i);
+            } catch (Exception e) {
+                break;
+            }
+        }
+    }
+
     private void configureBindings() {
-        JoystickButton resetEncoderButton = new JoystickButton(m_driverJoystick, 9);
-        resetEncoderButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
+        JoystickButton resetSwerveHeadingButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.resetSwerveHeadingButton);
+        resetSwerveHeadingButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
 
-        JoystickButton armMed = new JoystickButton(m_driverJoystick, 7);
-        armMed.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.STORE));
+        JoystickButton armStoreButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.armStoreButton);
+        armStoreButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.STORE));
 
-        // JoystickButton lockAndFireButton = new JoystickButton(m_driverJoystick, 5);
-        // lockAndFireButton.onTrue(
-        //     new InstantCommand(() -> m_spittoon.startFireSequence(), m_spittoon)
-        // );
+        JoystickButton esophagusFeedButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.esophagusFeedButton);
+        esophagusFeedButton.onTrue(new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus));
+        esophagusFeedButton.onFalse(new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus));
 
-        // JoystickButton somethingButton = new JoystickButton(m_driverJoystick, 7);
-        // resetEncoderButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
+        JoystickButton fireButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.archerfishFireButton);
+        fireButton.onTrue(new InstantCommand(() -> m_archerfish.startSpin(), m_archerfish));
+        fireButton.onFalse(new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish));
 
         m_driveSwerve.setDefaultCommand(
                 // Inline command instantiation--will run a lot forever. Runs first lambda arg

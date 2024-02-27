@@ -24,6 +24,7 @@ public class UpAndDownForever extends SubsystemBase {
 
   public UpAndDownForever() {
     m_motor = new CANSparkMax(Constants.UpDownForever.upDownMotorId, MotorType.kBrushless);
+
     m_PIDController = m_motor.getPIDController();
     m_encoder = m_motor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
