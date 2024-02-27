@@ -103,7 +103,6 @@ public class DriveSwerve extends SubsystemBase {
                 // https://github.com/REVrobotics/MAXSwerve-Java-Template -- Copyright REV
                 // Robotics, BSD-3-Clause
                 // TODO: rate limit "for smoother control". hope this doesnt explode
-                // TODO: FIELD RELATIVE
                 Vector2 speedDeliveredMetersPerSec = speed.mult_by(Constants.Drive.maxSpeedMetersPerSec);
                 double rotDelivered = rotSpeed * Constants.Drive.maxRotSpeedRadsPerSec;
 

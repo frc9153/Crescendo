@@ -17,6 +17,7 @@ import frc.robot.subsystems.DriveSwerve;
 import frc.robot.subsystems.Esophagus;
 import frc.robot.subsystems.NetworktableReader;
 import frc.robot.subsystems.UpAndDownForever;
+import frc.robot.utils.LimelightHelpers;
 import frc.robot.utils.Vector2;
 
 public class RobotContainer {
@@ -44,6 +45,28 @@ public class RobotContainer {
         }
     }
 
+    private void drive(Vector2 speed, double rotSpeed, boolean isFieldRelative) {
+        // Hijack swerve to align when requested
+
+        // TODO: Setup limelight
+        if (false) {
+            // https://docs.limelightvision.io/docs/docs-limelight/tutorials/tutorial-swerve-aiming-and-ranging
+            double kP = .035;
+
+            // uniform
+            double targetingAngularVelocity = LimelightHelpers.getTX("limelight") * kP;
+            targetingAngularVelocity *= Constants.Drive.maxRotSpeedRadsPerSec;
+
+            // invert since tx is positive when the target is to the right of the crosshair
+            targetingAngularVelocity *= -1.0;
+            rotSpeed = targetingAngularVelocity;
+
+            isFieldRelative = false;
+        }
+
+        m_driveSwerve.drive(speed, rotSpeed, isFieldRelative);
+    }
+
     private void configureBindings() {
         JoystickButton resetSwerveHeadingButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.resetSwerveHeadingButton);
         resetSwerveHeadingButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
@@ -63,7 +86,7 @@ public class RobotContainer {
                 // Inline command instantiation--will run a lot forever. Runs first lambda arg
                 // as command code and locks following args as requirements
                 new RunCommand(
-                        () -> m_driveSwerve.drive(
+                        () -> drive(
                                 new Vector2(
                                         -m_driverJoystick.getY(),
                                         -m_driverJoystick.getX()).deadband(Constants.HID.driverJoystickDeadband),
