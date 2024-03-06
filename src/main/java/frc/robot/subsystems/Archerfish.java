@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -25,7 +26,9 @@ public class Archerfish extends SubsystemBase {
                 MotorType.kBrushless
         );
         m_fireMotor.setIdleMode(IdleMode.kCoast);
+        m_fireMotor.setInverted(true);
         m_fireMotor.burnFlash();
+        CommandScheduler.getInstance().registerSubsystem(this);
     }
 
     public void startSpin() {
@@ -38,6 +41,7 @@ public class Archerfish extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_filter.calculate(m_targetSpeed);
+        m_fireMotor.set(m_filter.calculate(m_targetSpeed));
+        //m_fireMotor.set(m_targetSpeed);
     }
 }

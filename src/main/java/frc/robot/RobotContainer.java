@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -23,6 +24,7 @@ import frc.robot.utils.Vector2;
 
 public class RobotContainer {
     Joystick m_driverJoystick = new Joystick(Constants.HID.driverJoystickPort); // That logitech scary airplane looking thing
+    XboxController m_operatorController = new XboxController(Constants.HID.operatorJoystickPort);
     DriveSwerve m_driveSwerve = new DriveSwerve();
     Esophagus m_esophagus = new Esophagus(); // Green-wheeled feeding machine
     UpAndDownForever m_upDown = new UpAndDownForever(); // Shoulder type thing
@@ -75,20 +77,20 @@ public class RobotContainer {
         JoystickButton resetSwerveHeadingButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.resetSwerveHeadingButton);
         resetSwerveHeadingButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
 
-        JoystickButton armIntakeButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.armIntakeButton);
+        JoystickButton armIntakeButton = new JoystickButton(m_operatorController, Constants.HID.Binds.armIntakeButton);
         armIntakeButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE));
-        JoystickButton armShootButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.armShootButton);
+        JoystickButton armShootButton = new JoystickButton(m_operatorController, Constants.HID.Binds.armShootButton);
         armShootButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT));
-        JoystickButton armStoreButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.armStoreButton);
+        JoystickButton armStoreButton = new JoystickButton(m_operatorController, Constants.HID.Binds.armStoreButton);
         armStoreButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.STORE));
-        JoystickButton armAmpButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.armAmpButton);
+        JoystickButton armAmpButton = new JoystickButton(m_operatorController, Constants.HID.Binds.armAmpButton);
         armAmpButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP));
 
-        JoystickButton esophagusFeedButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.esophagusFeedButton);
+        JoystickButton esophagusFeedButton = new JoystickButton(m_operatorController, Constants.HID.Binds.esophagusFeedButton);
         esophagusFeedButton.onTrue(new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus));
         esophagusFeedButton.onFalse(new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus));
 
-        JoystickButton fireButton = new JoystickButton(m_driverJoystick, Constants.HID.Binds.archerfishFireButton);
+        JoystickButton fireButton = new JoystickButton(m_operatorController, Constants.HID.Binds.archerfishFireButton);
         fireButton.onTrue(new InstantCommand(() -> m_archerfish.startSpin(), m_archerfish));
         fireButton.onFalse(new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish));
 

@@ -17,6 +17,7 @@ public class Esophagus extends SubsystemBase {
             MotorType.kBrushless
         );
         m_raspberryMotor.setIdleMode(IdleMode.kCoast);
+        m_raspberryMotor.setInverted(true);
         m_raspberryMotor.burnFlash();
     }
 
