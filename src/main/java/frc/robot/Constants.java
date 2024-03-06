@@ -12,26 +12,41 @@ public class Constants {
         public static final double driverJoystickDeadband = 0.1;
 
         public class Binds {
-            public static final int resetSwerveHeadingButton = 9;
-            public static final int armStoreButton = 7;
+            public static final int resetSwerveHeadingButton = 8;
+
+            public static final int armIntakeButton = 5;
+            public static final int armShootButton = 3;
+            public static final int armStoreButton = 4;
+            public static final int armAmpButton = 6;
+
             // TODO: I have no idea what these button ids map to
-            public static final int esophagusFeedButton = 6;
-            public static final int archerfishFireButton = 5;
+            public static final int esophagusFeedButton = 9;
+            public static final int archerfishFireButton = 10;
+
+            public static final int climberPullButton = 12;
+            public static final int climberPushButton = 11;
         }
+    }
+
+    public class Climbing {
+        public static final int leftMotorId = 12;
+        public static final int rightMotorId = 13;
+
+        public static final double climbingMaxSpeeed = 0.3;
     }
     
     public class UpDownForever {
-        public static final int upDownMotorId = 10;
-        public static final double upDownP = 7.0;
+        public static final int upDownMotorId = 11;
+        public static final double upDownP = 5.0;
         public static final double upDownI = 0.0;
-        public static final double upDownD = 0.0;
+        public static final double upDownD = 4.0;
         public static final double upDownIZone = 0.0;
         public static final double upDownFF = 0.0;
         public static final double upDownMaxSpeed = 0.3;
         public static final double upDownPIDEpsilon = 0.05;
 
         public enum Setpoint {
-            INTAKE(0.25),
+            INTAKE(0.23),
             SHOOT(0.189),
             STORE(0.100),
             AMP(0.0);
@@ -49,17 +64,17 @@ public class Constants {
 
     public class Esophagus {
         public static final int esophagusId = 9;
-        public static final double esophagusSpeed = 0.4;
+        public static final double esophagusSpeed = -0.4;
     }
 
     public class Archerfish {
-        public static final int archerfishId = 11;
+        public static final int archerfishId = 10;
         // "0.4 is the one that hit the ceiling light" -Cedric, hours ago
-        public static final double archerfishSpeed = 0.2;
+        public static final double archerfishSpeed = -0.2;
     }
 
     public class Drive {
-        public static final double maxSpeedMetersPerSec = 1.0; // Please do not kill anyone with this
+        public static final double maxSpeedMetersPerSec = 1.5; // Please do not kill anyone with this
         public static final double maxRotSpeedRadsPerSec = Math.PI;
 
         public class Chassis {

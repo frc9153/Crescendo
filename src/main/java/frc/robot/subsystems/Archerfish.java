@@ -9,11 +9,15 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Archerfish extends SubsystemBase {
     private CANSparkBase m_fireMotor;
+    private SlewRateLimiter m_filter = new SlewRateLimiter(1.0);
+    private double m_targetSpeed = 0.0;
+
 
     public Archerfish() {
         m_fireMotor = new CANSparkMax(
@@ -25,10 +29,15 @@ public class Archerfish extends SubsystemBase {
     }
 
     public void startSpin() {
-        m_fireMotor.set(Constants.Archerfish.archerfishSpeed);
+        m_targetSpeed = Constants.Archerfish.archerfishSpeed;
     }
 
     public void stopSpin() {
-        m_fireMotor.set(0.0);
+        m_targetSpeed = 0.0;
+    }
+
+    @Override
+    public void periodic() {
+        m_filter.calculate(m_targetSpeed);
     }
 }
