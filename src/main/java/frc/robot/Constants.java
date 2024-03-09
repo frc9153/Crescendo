@@ -22,6 +22,7 @@ public class Constants {
             public class Operator {
                 public static final int armIntakeButton = 1;
                 public static final int armShootButton = 2;
+                public static final int armStartButton = 3;
                 public static final int armAmpButton = 4;
             }
 
@@ -48,6 +49,7 @@ public class Constants {
         public enum Setpoint {
             INTAKE(0.490),
             SHOOT(0.460),
+            START(0.360),
             AMP(0.254);
 
             private final double targetPosition;

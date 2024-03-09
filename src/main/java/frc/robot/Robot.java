@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -12,12 +14,17 @@ public class Robot extends TimedRobot {
     // TO DEAREST G: Pls don't put robo logic here! - Much love, G
 
     private Command m_autonomousCommand;
-
     private RobotContainer m_robotContainer;
+    private SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     @Override
     public void robotInit() {
         m_robotContainer = new RobotContainer();
+
+        m_chooser.setDefaultOption("Test", m_robotContainer.m_test);
+
+        SmartDashboard.putData("Autonomous Routine", m_chooser);
+        SmartDashboard.putData(CommandScheduler.getInstance());
     }
 
     @Override
@@ -39,7 +46,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        m_autonomousCommand = m_chooser.getSelected();
 
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();

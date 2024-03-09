@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.UpDownForever.Setpoint;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.UpDownCommand;
 import frc.robot.subsystems.Archerfish;
 import frc.robot.subsystems.Climbing;
@@ -23,6 +25,7 @@ import frc.robot.subsystems.NetworktableReader;
 import frc.robot.subsystems.UpAndDownForever;
 import frc.robot.utils.LimelightHelpers;
 import frc.robot.utils.Vector2;
+
 
 public class RobotContainer {
     CommandJoystick m_driverJoystick = new CommandJoystick(Constants.HID.driverJoystickPort); // That logitech scary airplane looking thing
@@ -34,6 +37,10 @@ public class RobotContainer {
     Climbing m_climber = new Climbing(); // Fast spinning shootey bit
     NetworktableReader m_networkTableReader = new NetworktableReader(m_driveSwerve);
     boolean m_aiming = false;
+
+    public final Command m_test = new SequentialCommandGroup(
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0.5), 0, false)
+    );
 
     public RobotContainer() {
         System.out.println("HELLO ; We are starting");
@@ -84,9 +91,11 @@ public class RobotContainer {
 
         Trigger armIntakeButton = m_operatorController.button(Constants.HID.Binds.Operator.armIntakeButton);
         Trigger armShootButton = m_operatorController.button(Constants.HID.Binds.Operator.armShootButton);
+        Trigger armStartButton = m_operatorController.button(Constants.HID.Binds.Operator.armStartButton);
         Trigger armAmpButton = m_operatorController.button(Constants.HID.Binds.Operator.armAmpButton);
         armIntakeButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE));
         armShootButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT));
+        armStartButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.START));
         armAmpButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP));
 
         Trigger esophagusFeedButton = m_operatorController.leftTrigger(0.3);
@@ -121,9 +130,5 @@ public class RobotContainer {
                                 -m_driverJoystick.getTwist(),
                                 !m_driverJoystick.button(Constants.HID.Binds.Driver.robotOrientedDriveButton).getAsBoolean()),
                         m_driveSwerve));
-    }
-
-    public Command getAutonomousCommand() {
-        return Commands.print("No autonomous command configured");
     }
 }

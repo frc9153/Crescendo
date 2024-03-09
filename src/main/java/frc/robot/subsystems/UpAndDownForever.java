@@ -16,7 +16,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.UpDownForever.Setpoint;
 
 public class UpAndDownForever extends SubsystemBase {
-    private Setpoint m_setpoint = Setpoint.AMP;
+    private Setpoint m_setpoint = Setpoint.START;
     private final CANSparkMax m_motor;
     private final SparkPIDController m_PIDController;
     private final SparkAbsoluteEncoder m_encoder;
