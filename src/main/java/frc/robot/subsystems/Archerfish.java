@@ -16,7 +16,7 @@ import frc.robot.Constants;
 
 public class Archerfish extends SubsystemBase {
     private CANSparkBase m_fireMotor;
-    private SlewRateLimiter m_filter = new SlewRateLimiter(1.0);
+    private SlewRateLimiter m_filter = new SlewRateLimiter(0.2);
     private double m_targetSpeed = 0.0;
 
 
@@ -31,17 +31,22 @@ public class Archerfish extends SubsystemBase {
         CommandScheduler.getInstance().registerSubsystem(this);
     }
 
+    private void setSpeed(double speed) {
+        // m_targetSpeed = speed;
+        m_fireMotor.set(speed);
+    }
+
     public void startSpin() {
-        m_targetSpeed = Constants.Archerfish.archerfishSpeed;
+        setSpeed(Constants.Archerfish.archerfishSpeed);
     }
 
     public void stopSpin() {
-        m_targetSpeed = 0.0;
+        setSpeed(0.0);
     }
 
     @Override
     public void periodic() {
-        m_fireMotor.set(m_filter.calculate(m_targetSpeed));
+        //m_fireMotor.set(m_filter.calculate(m_targetSpeed));
         //m_fireMotor.set(m_targetSpeed);
     }
 }

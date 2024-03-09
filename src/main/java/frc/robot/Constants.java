@@ -13,21 +13,18 @@ public class Constants {
         public static final double driverJoystickDeadband = 0.1;
 
         public class Binds {
-            public static final int resetSwerveHeadingButton = 8;
+            public class Driver {
+                public static final int robotOrientedDriveButton = 3;
+                public static final int resetSwerveHeadingButton = 8;
+                public static final int magicAimButton = 12;
+            }
 
-            public static final int armIntakeButton = 1;
-            public static final int armShootButton = 2;
-            public static final int armStoreButton = 3;
-            public static final int armAmpButton = 4;
+            public class Operator {
+                public static final int armIntakeButton = 1;
+                public static final int armShootButton = 2;
+                public static final int armAmpButton = 4;
+            }
 
-            //public static final int armKillButton = 5;
-
-            // TODO: I have no idea what these button ids map to
-            public static final int esophagusFeedButton = 5;
-            public static final int archerfishFireButton = 6;
-
-            public static final int climberPullButton = 12;
-            public static final int climberPushButton = 11;
         }
     }
 
@@ -45,14 +42,13 @@ public class Constants {
         public static final double upDownD = 4.0;
         public static final double upDownIZone = 0.0;
         public static final double upDownFF = 0.0;
-        public static final double upDownMaxSpeed = 0.3;
+        public static final double upDownMaxSpeed = 0.15;
         public static final double upDownPIDEpsilon = 0.05;
 
         public enum Setpoint {
-            INTAKE(0.27),
-            SHOOT(0.189),
-            STORE(0.100),
-            AMP(0.0);
+            INTAKE(0.490),
+            SHOOT(0.460),
+            AMP(0.254);
 
             private final double targetPosition;
             private Setpoint(double targetPosition) {
@@ -73,7 +69,8 @@ public class Constants {
     public class Archerfish {
         public static final int archerfishId = 10;
         // "0.4 is the one that hit the ceiling light" -Cedric, hours ago
-        public static final double archerfishSpeed = 0.2;
+        // he did not say this..............Liar
+        public static final double archerfishSpeed = 0.55;
     }
 
     public class Drive {
