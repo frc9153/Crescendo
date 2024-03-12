@@ -14,7 +14,7 @@ public class Constants {
 
         public class Binds {
             public class Driver {
-                public static final int robotOrientedDriveButton = 3;
+                public static final int robotOrientedDriveButton = 2;
                 public static final int resetSwerveHeadingButton = 8;
                 public static final int magicAimButton = 12;
             }
@@ -24,6 +24,7 @@ public class Constants {
                 public static final int armShootButton = 2;
                 public static final int armStartButton = 3;
                 public static final int armAmpButton = 4;
+                public static final int shooterReverseButton = 5;
             }
 
         }
@@ -33,7 +34,7 @@ public class Constants {
         public static final int leftMotorId = 12;
         public static final int rightMotorId = 13;
 
-        public static final double climbingMaxSpeeed = 0.3;
+        public static final double climbingMaxSpeeed = 0.75;
     }
     
     public class UpDownForever {
@@ -46,11 +47,13 @@ public class Constants {
         public static final double upDownMaxSpeed = 0.15;
         public static final double upDownPIDEpsilon = 0.05;
 
+        // Increase -> Down
+        public static final double setpointOffset = -0.01;
         public enum Setpoint {
-            INTAKE(0.490),
-            SHOOT(0.460),
-            START(0.360),
-            AMP(0.254);
+            INTAKE(0.475+setpointOffset),
+            SHOOT(0.455+setpointOffset),
+            START(0.280+setpointOffset),
+            AMP(0.240+setpointOffset);
 
             private final double targetPosition;
             private Setpoint(double targetPosition) {
@@ -66,6 +69,7 @@ public class Constants {
     public class Esophagus {
         public static final int esophagusId = 9;
         public static final double esophagusSpeed = 0.55;
+        public static final double reverseSpeed = -0.18;
     }
 
     public class Archerfish {
@@ -76,7 +80,7 @@ public class Constants {
     }
 
     public class Drive {
-        public static final double maxSpeedMetersPerSec = 1.5; // Please do not kill anyone with this
+        public static final double maxSpeedMetersPerSec = 3; // Please do not kill anyone with this
         public static final double maxRotSpeedRadsPerSec = Math.PI;
 
         public class Chassis {

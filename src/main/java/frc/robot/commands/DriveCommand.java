@@ -19,6 +19,8 @@ public class DriveCommand extends Command {
     m_speed = speed;
     m_rotation = rotation;
     m_isFieldRelative = isFieldRelative;
+    
+    addRequirements(drive);
   }
 
   @Override

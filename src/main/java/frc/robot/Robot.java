@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
     // TO DEAREST G: Pls don't put robo logic here! - Much love, G
+    // TO DEAREST G: put sooooo much robo logic here hehehehehehhehehehhee - Much love, J
 
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
@@ -21,7 +22,11 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         m_robotContainer = new RobotContainer();
 
-        m_chooser.setDefaultOption("Test", m_robotContainer.m_test);
+        m_chooser.setDefaultOption("Do NOTHING!", m_robotContainer.m_doNothing);
+        m_chooser.addOption("Test", m_robotContainer.m_test);
+        m_chooser.addOption("Amp; Piece", m_robotContainer.m_AmpPiece);
+        m_chooser.addOption("Amp; Shoot", m_robotContainer.m_AmpShoot);
+        m_chooser.addOption("Shoot; Basic", m_robotContainer.m_basicShoot);
 
         SmartDashboard.putData("Autonomous Routine", m_chooser);
         SmartDashboard.putData(CommandScheduler.getInstance());
