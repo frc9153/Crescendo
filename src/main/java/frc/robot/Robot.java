@@ -26,7 +26,8 @@ public class Robot extends TimedRobot {
         m_chooser.addOption("Test", m_robotContainer.m_test);
         m_chooser.addOption("Amp; Piece", m_robotContainer.m_AmpPiece);
         m_chooser.addOption("Amp; Shoot", m_robotContainer.m_AmpShoot);
-        m_chooser.addOption("Shoot; Basic", m_robotContainer.m_basicShoot);
+        m_chooser.addOption("Shoot; Piece", m_robotContainer.m_ShootPiece);
+        m_chooser.addOption("Shoot; Shoot", m_robotContainer.m_ShootShoot);
 
         SmartDashboard.putData("Autonomous Routine", m_chooser);
         SmartDashboard.putData(CommandScheduler.getInstance());
