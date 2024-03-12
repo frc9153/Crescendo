@@ -44,6 +44,10 @@ public class Archerfish extends SubsystemBase {
         setSpeed(0.0);
     }
 
+    public void reverseSpin() {
+        setSpeed(Constants.Archerfish.archerfishSpeedReverse);
+    }
+
     @Override
     public void periodic() {
         //m_fireMotor.set(m_filter.calculate(m_targetSpeed));

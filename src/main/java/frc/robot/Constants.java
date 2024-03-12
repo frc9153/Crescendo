@@ -77,6 +77,7 @@ public class Constants {
         // "0.4 is the one that hit the ceiling light" -Cedric, hours ago
         // he did not say this..............Liar
         public static final double archerfishSpeed = 0.55;
+        public static final double archerfishSpeedReverse = -0.1;
     }
 
     public class Drive {
