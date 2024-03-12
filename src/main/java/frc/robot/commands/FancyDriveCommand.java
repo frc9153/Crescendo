@@ -35,7 +35,7 @@ public class FancyDriveCommand extends Command {
   }
 
   @Override public void execute() {
-    m_drive.drive(currentOffset().minus(m_targetOffset).normalized(), 0, true);
+    m_drive.drive(currentOffset().minus(m_targetOffset).normalized().multBy(0.3), 0, true);
   }
 
   @Override
