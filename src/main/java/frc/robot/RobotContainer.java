@@ -201,7 +201,7 @@ public class RobotContainer {
                         () -> drive(
                                 new Vector2(-m_driverJoystick.getY(), -m_driverJoystick.getX())
                                 .deadband(Constants.HID.driverJoystickDeadband)
-                                .mult_by(
+                                .multBy(
                                     1.0 - (m_driverJoystick.getThrottle() + 1.0) / 2.0
                                 ),
                                 -m_driverJoystick.getTwist(),

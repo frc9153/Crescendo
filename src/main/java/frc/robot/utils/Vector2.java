@@ -67,19 +67,19 @@ public class Vector2 {
         return vectorOp(that, (a, b) -> a - b);
     }
 
-    public Vector2 mult_by(Vector2 that) {
+    public Vector2 multBy(Vector2 that) {
         return vectorOp(that, (a, b) -> a * b);
     }
 
-    public Vector2 mult_by(double that) {
+    public Vector2 multBy(double that) {
         return vectorOp(that, (a, b) -> a * b);
     }
 
-    public Vector2 div_by(Vector2 that) {
+    public Vector2 divBy(Vector2 that) {
         return vectorOp(that, (a, b) -> a / b);
     }
 
-    public Vector2 div_by(double that) {
+    public Vector2 divBy(double that) {
         return vectorOp(that, (a, b) -> a / b);
     }
 
@@ -88,6 +88,10 @@ public class Vector2 {
     }
 
     public Vector2 normalized() {
-        return this.div_by(this.magnitude());
+        return this.divBy(this.magnitude());
+    }
+
+    public double distanceTo(Vector2 that) {
+        return Math.sqrt(Math.pow(this.x - that.x, 2) + Math.pow(this.y - that.y, 2));
     }
 }

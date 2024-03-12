@@ -104,7 +104,7 @@ public class DriveSwerve extends SubsystemBase {
                 // https://github.com/REVrobotics/MAXSwerve-Java-Template -- Copyright REV
                 // Robotics, BSD-3-Clause
                 // TODO: rate limit "for smoother control". hope this doesnt explode
-                Vector2 speedDeliveredMetersPerSec = speed.mult_by(Constants.Drive.maxSpeedMetersPerSec);
+                Vector2 speedDeliveredMetersPerSec = speed.multBy(Constants.Drive.maxSpeedMetersPerSec);
                 double rotDelivered = rotSpeed * Constants.Drive.maxRotSpeedRadsPerSec;
 
                 double angle = m_gyro.getAngle();
