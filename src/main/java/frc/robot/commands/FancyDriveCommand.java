@@ -11,9 +11,10 @@ import frc.robot.Constants;
 import frc.robot.subsystems.DriveSwerve;
 import frc.robot.utils.Vector2;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FancyDriveCommand extends Command {
-  static final double EPSILON = 0.1;
+  static final double EPSILON = 0.01;
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
   private final DriveSwerve m_drive;
   private Vector2 m_targetOffset;
@@ -35,7 +36,11 @@ public class FancyDriveCommand extends Command {
   }
 
   @Override public void execute() {
-    m_drive.drive(currentOffset().minus(m_targetOffset).normalized().multBy(0.3), 0, true);
+    Vector2 weAreHere = currentOffset();
+    SmartDashboard.putString("we're here", weAreHere.toString());
+    Vector2 targetDirection = weAreHere.minus(m_targetOffset).normalized().multBy(-1.0);
+    SmartDashboard.putString("lets go", targetDirection.toString());
+    m_drive.drive(targetDirection.multBy(0.1), 0, true);
   }
 
   @Override
@@ -46,6 +51,7 @@ public class FancyDriveCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return currentOffset().distanceTo(m_targetOffset) < EPSILON;
+    //return currentOffset().distanceTo(m_targetOffset) < EPSILON || currentOffset().magnitude() > 1.2 * ;
+    return currentOffset().magnitude() >= m_targetOffset.magnitude();
   }
 }

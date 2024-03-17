@@ -15,6 +15,10 @@ public class Vector2 {
         this.y = y;
     }
 
+    public String toString() {
+        return String.format("(%4.3f, %4.3f)", this.x, this.y);
+    }
+
     static public Vector2 Zero() {
         return new Vector2(0.0, 0.0);
     }

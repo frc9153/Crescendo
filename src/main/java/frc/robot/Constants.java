@@ -24,7 +24,8 @@ public class Constants {
                 public static final int armShootButton = 2;
                 public static final int armStartButton = 3;
                 public static final int armAmpButton = 4;
-                public static final int shooterReverseButton = 5;
+                public static final int intakeReverseButton = 5;
+                public static final int shooterSlowButton = 6;
             }
 
         }
@@ -48,12 +49,12 @@ public class Constants {
         public static final double upDownPIDEpsilon = 0.05;
 
         // Increase -> Down
-        public static final double setpointOffset = -0.01;
+        public static final double setpointOffset = -0.005;
         public enum Setpoint {
             INTAKE(0.475+setpointOffset),
-            SHOOT(0.455+setpointOffset),
+            SHOOT(0.445+setpointOffset),
             START(0.280+setpointOffset),
-            AMP(0.240+setpointOffset);
+            AMP(0.230+setpointOffset);
 
             private final double targetPosition;
             private Setpoint(double targetPosition) {
@@ -77,7 +78,7 @@ public class Constants {
         // "0.4 is the one that hit the ceiling light" -Cedric, hours ago
         // he did not say this..............Liar
         public static final double archerfishSpeed = 0.55;
-        public static final double archerfishSpeedReverse = -0.1;
+        public static final double archerfishSpeedSlow = 0.3;
     }
 
     public class Drive {

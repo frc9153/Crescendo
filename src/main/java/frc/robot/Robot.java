@@ -23,11 +23,20 @@ public class Robot extends TimedRobot {
         m_robotContainer = new RobotContainer();
 
         m_chooser.setDefaultOption("Do NOTHING!", m_robotContainer.m_doNothing);
-        m_chooser.addOption("Test", m_robotContainer.m_test);
-        m_chooser.addOption("Amp; Piece", m_robotContainer.m_AmpPiece);
-        m_chooser.addOption("Amp; Shoot", m_robotContainer.m_AmpShoot);
+        // m_chooser.addOption("Test", m_robotContainer.m_test);
+
+        m_chooser.addOption("(Red) Amp; Do Nothing", m_robotContainer.m_redAmpAndDoNothing);
+        m_chooser.addOption("(Red) Amp; Piece", m_robotContainer.m_redAmpPiece);
+        m_chooser.addOption("(Red) Amp; Shoot", m_robotContainer.m_redAmpShoot);
+
+        m_chooser.addOption("(Blue) Amp; Do Nothing", m_robotContainer.m_blueAmpAndDoNothing);
+        m_chooser.addOption("(Blue) Amp; Piece", m_robotContainer.m_blueAmpPiece);
+        m_chooser.addOption("(Blue) Amp; Shoot", m_robotContainer.m_blueAmpShoot);
+
+        m_chooser.addOption("Shoot; Do Nothing", m_robotContainer.m_ShootAndDoNothing);
         m_chooser.addOption("Shoot; Piece", m_robotContainer.m_ShootPiece);
         m_chooser.addOption("Shoot; Shoot", m_robotContainer.m_ShootShoot);
+
 
         SmartDashboard.putData("Autonomous Routine", m_chooser);
         SmartDashboard.putData(CommandScheduler.getInstance());

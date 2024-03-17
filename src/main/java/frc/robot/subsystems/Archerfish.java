@@ -16,7 +16,7 @@ import frc.robot.Constants;
 
 public class Archerfish extends SubsystemBase {
     private CANSparkBase m_fireMotor;
-    private SlewRateLimiter m_filter = new SlewRateLimiter(0.2);
+    private SlewRateLimiter m_filter = new SlewRateLimiter(0.07);
     private double m_targetSpeed = 0.0;
 
 
@@ -44,8 +44,8 @@ public class Archerfish extends SubsystemBase {
         setSpeed(0.0);
     }
 
-    public void reverseSpin() {
-        setSpeed(Constants.Archerfish.archerfishSpeedReverse);
+    public void slowSpin() {
+        setSpeed(Constants.Archerfish.archerfishSpeedSlow);
     }
 
     @Override
