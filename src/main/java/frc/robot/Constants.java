@@ -40,21 +40,21 @@ public class Constants {
     
     public class UpDownForever {
         public static final int upDownMotorId = 11;
-        public static final double upDownP = 5.0;
+        public static final double upDownP = 4.0;
         public static final double upDownI = 0.0;
-        public static final double upDownD = 4.0;
+        public static final double upDownD = 5.0;
         public static final double upDownIZone = 0.0;
         public static final double upDownFF = 0.0;
-        public static final double upDownMaxSpeed = 0.15;
+        public static final double upDownMaxSpeed = 0.20;// 0.25
         public static final double upDownPIDEpsilon = 0.05;
 
         // Increase -> Down
-        public static final double setpointOffset = -0.005;
+        public static final double setpointOffset = -0.023;// -0.0005
         public enum Setpoint {
-            INTAKE(0.475+setpointOffset),
-            SHOOT(0.445+setpointOffset),
+            INTAKE(0.472+setpointOffset),
+            SHOOT(0.442+setpointOffset),
             START(0.280+setpointOffset),
-            AMP(0.230+setpointOffset);
+            AMP(0.240+setpointOffset);
 
             private final double targetPosition;
             private Setpoint(double targetPosition) {
@@ -69,7 +69,7 @@ public class Constants {
 
     public class Esophagus {
         public static final int esophagusId = 9;
-        public static final double esophagusSpeed = 0.55;
+        public static final double esophagusSpeed = 0.37;// 0.55
         public static final double reverseSpeed = -0.18;
     }
 
@@ -81,8 +81,14 @@ public class Constants {
         public static final double archerfishSpeedSlow = 0.3;
     }
 
+    public class LaserCannon {
+        public static final int laserCannonId = 14;
+
+        public static final double noteDistThreshold = 200.0;
+    }
+
     public class Drive {
-        public static final double maxSpeedMetersPerSec = 3; // Please do not kill anyone with this
+        public static final double maxSpeedMetersPerSec = 4.8; // Please do not kill anyone with this
         public static final double maxRotSpeedRadsPerSec = Math.PI;
 
         public class Chassis {

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FancyDriveCommand extends Command {
   static final double EPSILON = 0.01;
-  private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+  // private final AHRS gyro = new AHRS(SPI.Port.kMXP);
   private final DriveSwerve m_drive;
   private Vector2 m_targetOffset;
 
@@ -27,12 +27,13 @@ public class FancyDriveCommand extends Command {
   }
 
   private Vector2 currentOffset() {
-    return new Vector2(gyro.getDisplacementX(), gyro.getDisplacementY());
+    return Vector2.Zero();
+    // return new Vector2(gyro.getDisplacementX(), gyro.getDisplacementY());
   }
 
   @Override
   public void initialize() {
-    gyro.resetDisplacement();
+    // gyro.resetDisplacement();
   }
 
   @Override public void execute() {

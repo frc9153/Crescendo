@@ -13,10 +13,11 @@ import frc.robot.Constants;
 
 public class Esophagus extends SubsystemBase {
     private CANSparkBase m_raspberryMotor;
-    private BooleanSupplier m_canRun;
+    private BooleanSupplier m_armInIntake;
     private boolean m_run_forward = false;
+    private BooleanSupplier m_noteIntook;
 
-    public Esophagus(BooleanSupplier canRun) {
+    public Esophagus(BooleanSupplier armInIntake, BooleanSupplier noteIntook) {
         m_raspberryMotor = new CANSparkMax(
             Constants.Esophagus.esophagusId,
             MotorType.kBrushless
@@ -24,13 +25,29 @@ public class Esophagus extends SubsystemBase {
         m_raspberryMotor.setIdleMode(IdleMode.kCoast);
         m_raspberryMotor.setInverted(true);
         m_raspberryMotor.burnFlash();
-        m_canRun = canRun;
+        m_armInIntake = armInIntake;
+        m_noteIntook = noteIntook;
         CommandScheduler.getInstance().registerSubsystem(this);
+    }
+
+    public boolean SensorTriggered() {
+        if (m_armInIntake.getAsBoolean() && m_noteIntook.getAsBoolean()) {
+            return true;
+        }
+        return false;
+    }
+
+    public void check_speed() {
+        if (!m_armInIntake.getAsBoolean() && m_run_forward) {
+            double speed = Constants.Esophagus.esophagusSpeed / 3;
+            m_raspberryMotor.set(speed);
+        };
     }
 
     public void startFeeding() {
         m_run_forward = true;
-        m_raspberryMotor.set(Constants.Esophagus.esophagusSpeed);
+        double speed = Constants.Esophagus.esophagusSpeed;
+        m_raspberryMotor.set(speed);
     }
 
     public void startReverse() {
@@ -45,9 +62,6 @@ public class Esophagus extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (!m_canRun.getAsBoolean() && m_run_forward) {
-            double speed = Constants.Esophagus.esophagusSpeed / 3;
-            m_raspberryMotor.set(speed);
-        };
+        this.check_speed();
     }
 }

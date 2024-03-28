@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+
 public class Robot extends TimedRobot {
     // TO DEAREST G: Pls don't put robo logic here! - Much love, G
     // TO DEAREST G: put sooooo much robo logic here hehehehehehhehehehhee - Much love, J
@@ -36,6 +37,12 @@ public class Robot extends TimedRobot {
         m_chooser.addOption("Shoot; Do Nothing", m_robotContainer.m_ShootAndDoNothing);
         m_chooser.addOption("Shoot; Piece", m_robotContainer.m_ShootPiece);
         m_chooser.addOption("Shoot; Shoot", m_robotContainer.m_ShootShoot);
+
+        m_chooser.addOption("Right Side Shoot; Correct", m_robotContainer.m_rightShootCorrect);
+        m_chooser.addOption("Right Side Shoot; Mobility", m_robotContainer.m_rightShootMobility);
+        
+        m_chooser.addOption("Left Side Shoot; Correct", m_robotContainer.m_leftShootCorrect);
+        m_chooser.addOption("Left Side Shoot; Mobility", m_robotContainer.m_leftShootMobility);
 
 
         SmartDashboard.putData("Autonomous Routine", m_chooser);
