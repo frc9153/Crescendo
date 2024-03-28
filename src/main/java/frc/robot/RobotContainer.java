@@ -331,7 +331,7 @@ public class RobotContainer {
         Trigger armShootButton = m_operatorController.button(Constants.HID.Binds.Operator.armShootButton);
         Trigger armStartButton = m_operatorController.button(Constants.HID.Binds.Operator.armStartButton);
         Trigger armAmpButton = m_operatorController.button(Constants.HID.Binds.Operator.armAmpButton);
-        armIntakeButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE));
+        armIntakeButton.onTrue(new AmpThenScore(m_upDown, m_archerfish, m_esophagus));
         armShootButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT));
         armStartButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.START));
         armAmpButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP));
@@ -344,13 +344,12 @@ public class RobotContainer {
         esophagusFeedButton.onTrue(new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus));
         esophagusFeedButton.onFalse(new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus));
 
-        Trigger fireButton = m_operatorController.button(Constants.HID.Binds.Operator.shooterSlowButton);
-        fireButton.onTrue(new InstantCommand(() -> m_archerfish.slowSpin(), m_archerfish));
-        fireButton.onFalse(new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish));
-
-        Trigger fireSlowButton = m_operatorController.rightTrigger(0.3);
-        fireSlowButton.onTrue(new InstantCommand(() -> m_archerfish.startSpin(), m_archerfish));
+        Trigger fireSlowButton = m_operatorController.button(Constants.HID.Binds.Operator.shooterSlowButton);
+        fireSlowButton.onTrue(new InstantCommand(() -> m_archerfish.slowSpin(), m_archerfish));
         fireSlowButton.onFalse(new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish));
+
+        Trigger fireButton = m_operatorController.rightTrigger(0.3);
+        fireButton.onTrue(new WindThenScore(m_archerfish, m_esophagus));
 
         Trigger climberPullButton = m_operatorController.pov(0);
         Trigger climberPushButton = m_operatorController.pov(180);
