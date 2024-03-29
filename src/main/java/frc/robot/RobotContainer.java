@@ -17,10 +17,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.UpDownForever.Setpoint;
+import frc.robot.commands.AmpThenScore;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.FancyDriveCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.UpDownCommand;
+import frc.robot.commands.WindThenScore;
 import frc.robot.subsystems.Archerfish;
 import frc.robot.subsystems.Climbing;
 import frc.robot.subsystems.DriveSwerve;
@@ -52,22 +54,16 @@ public class RobotContainer {
         );
     public final Command m_redAmpPiece = new SequentialCommandGroup(
         new DriveCommand(m_driveSwerve, new Vector2(0, -0.3125), 0, false).withTimeout(0.7),
-        new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-        new ParallelCommandGroup(new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
-            new InstantCommand(() -> m_archerfish.startSpin(), m_archerfish),
-            new WaitCommand(0.7)),
+        new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(2.0),
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-        new ParallelCommandGroup(new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus),
-            new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish),
-            new DriveCommand(m_driveSwerve, new Vector2(0, 0.3125), 0, false).withTimeout(0.2)),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0.3125), 0, false).withTimeout(0.2),
         new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(0.7),
-        new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.3125, false).withTimeout(1.2),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(1.2),
         new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
         new WaitCommand(0.3),
-        new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
-        new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(1.5),
-        new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus)
+        new ParallelCommandGroup(new IntakeCommand(m_esophagus).withTimeout(1.5),
+            new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(1.5))
     );
     public final Command m_blueAmpPiece = new SequentialCommandGroup(
         new DriveCommand(m_driveSwerve, new Vector2(0, 0.3125), 0, false).withTimeout(0.7),
@@ -80,7 +76,7 @@ public class RobotContainer {
             new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish),
             new DriveCommand(m_driveSwerve, new Vector2(0, -0.3125), 0, false).withTimeout(0.2)),
         new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(0.7),
-        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.3125, false).withTimeout(1.2),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(1.2),
         new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
         new WaitCommand(0.3),
@@ -137,7 +133,7 @@ public class RobotContainer {
         new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus),
         new DriveCommand(m_driveSwerve, new Vector2(-0.3125, 0), 0, false).withTimeout(1.3),
         new DriveCommand(m_driveSwerve, new Vector2(0, 0.3125), 0, false).withTimeout(0.8),
-        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.3125, false).withTimeout(0.1),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.1),
         new DriveCommand(m_driveSwerve, new Vector2(-0.3125, 0), 0, false).withTimeout(0.5),
         new ParallelCommandGroup(new InstantCommand(() -> m_archerfish.startSpin(), m_archerfish),
             new WaitCommand(2.0)),
@@ -158,7 +154,7 @@ public class RobotContainer {
             new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish),
             new DriveCommand(m_driveSwerve, new Vector2(0, -0.3125), 0, false).withTimeout(0.2)),
         new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(0.65),
-        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.3125, false).withTimeout(1.2),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(1.2),
         new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
         new WaitCommand(0.3),
@@ -171,7 +167,7 @@ public class RobotContainer {
         new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus),
         new DriveCommand(m_driveSwerve, new Vector2(-0.3125, 0), 0, false).withTimeout(1.3),
         new DriveCommand(m_driveSwerve, new Vector2(0, -0.3125), 0, false).withTimeout(0.8),
-        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.3125, false).withTimeout(0.1),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.1),
         new DriveCommand(m_driveSwerve, new Vector2(-0.3125, 0), 0, false).withTimeout(0.5),
         new ParallelCommandGroup(new InstantCommand(() -> m_archerfish.startSpin(), m_archerfish),
             new WaitCommand(2.0)),
@@ -252,35 +248,20 @@ public class RobotContainer {
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT)
     );
     public final Command m_ShootShoot = new SequentialCommandGroup(
+        new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1),
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
         new WaitCommand(0.7),
-        //new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-        //new WaitCommand(0.7),
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-        new ParallelCommandGroup(new InstantCommand(() -> m_archerfish.startSpin(), m_archerfish),
-            new WaitCommand(2.0)),
-        new ParallelCommandGroup(new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
-            new WaitCommand(0.7)),
-        new ParallelCommandGroup(new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus),
-            new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish)),
-        new ParallelCommandGroup(new InstantCommand(() -> m_archerfish.slowSpin(), m_archerfish),
-            new WaitCommand(2.0)),
-        new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish),
+        new WaitCommand(0.7),
+        new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.5),
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-        new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
-        new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(1.0),
-        new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus),
+        new WaitCommand(0.7),
+        new ParallelCommandGroup(new IntakeCommand(m_esophagus).withTimeout(1.0),
+            new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(1.3)),
         new ParallelCommandGroup(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-            new InstantCommand(() -> m_esophagus.startReverse(), m_esophagus),
             new WaitCommand(0.2)),
-        new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus),
-        new DriveCommand(m_driveSwerve, new Vector2(-0.3125, 0), 0, false).withTimeout(1.2),
-        new ParallelCommandGroup(new InstantCommand(() -> m_archerfish.startSpin(), m_archerfish),
-            new WaitCommand(2.0)),
-        new ParallelCommandGroup(new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
-            new WaitCommand(0.9)),
-        new ParallelCommandGroup(new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus),
-            new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish))
+        new DriveCommand(m_driveSwerve, new Vector2(-0.3125, 0), 0, false).withTimeout(1.5),
+        new WindThenScore(m_archerfish, m_esophagus).withTimeout(2.5)
     );
     public final Command m_leftShootCorrect = new SequentialCommandGroup(
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
@@ -300,7 +281,7 @@ public class RobotContainer {
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
         new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
         new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(0.5),
-        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.3125, false).withTimeout(0.6),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.6),
         new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve)
     );
     public final Command m_rightShootCorrect = new SequentialCommandGroup(
@@ -321,7 +302,7 @@ public class RobotContainer {
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
         new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
         new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(0.5),
-        new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.3125, false).withTimeout(0.6),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(0.6),
         new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve)
     );
     public final Command m_leftShootMobility = new SequentialCommandGroup(
@@ -342,7 +323,7 @@ public class RobotContainer {
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
         new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
         new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(0.5),
-        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.3125, false).withTimeout(0.6),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.6),
         new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
         new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(1.0)
     );
@@ -364,7 +345,7 @@ public class RobotContainer {
         new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
         new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
         new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(0.5),
-        new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.3125, false).withTimeout(0.6),
+        new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(0.6),
         new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
         new DriveCommand(m_driveSwerve, new Vector2(0.3125, 0), 0, false).withTimeout(1.0)
     );
@@ -420,10 +401,10 @@ public class RobotContainer {
         Trigger armShootButton = m_operatorController.button(Constants.HID.Binds.Operator.armShootButton);
         Trigger armStartButton = m_operatorController.button(Constants.HID.Binds.Operator.armStartButton);
         Trigger armAmpButton = m_operatorController.button(Constants.HID.Binds.Operator.armAmpButton);
-        armIntakeButton.onTrue(new AmpThenScore(m_upDown, m_archerfish, m_esophagus));
+        armIntakeButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE));
         armShootButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT));
         armStartButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.START));
-        armAmpButton.onTrue(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP));
+        armAmpButton.whileTrue(new AmpThenScore(m_upDown, m_archerfish, m_esophagus));
 
         Trigger esophagusOutButton = m_operatorController.button(Constants.HID.Binds.Operator.intakeReverseButton);
         esophagusOutButton.onTrue(new InstantCommand(() -> m_esophagus.startReverse(), m_esophagus));
@@ -437,7 +418,7 @@ public class RobotContainer {
         fireSlowButton.onFalse(new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish));
 
         Trigger fireButton = m_operatorController.rightTrigger(0.3);
-        fireButton.onTrue(new WindThenScore(m_archerfish, m_esophagus));
+        fireButton.whileTrue(new WindThenScore(m_archerfish, m_esophagus));
 
         Trigger climberPullButton = m_operatorController.pov(0);
         Trigger climberPushButton = m_operatorController.pov(180);

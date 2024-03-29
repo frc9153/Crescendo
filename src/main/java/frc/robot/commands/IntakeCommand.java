@@ -24,6 +24,9 @@ public class IntakeCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     m_esophagus.stopFeeding();
+    if (!interrupted) {
+        System.out.println("Sensor Tripped!");
+    }
   }
 
   @Override

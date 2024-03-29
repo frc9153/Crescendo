@@ -2,10 +2,11 @@ package frc.robot.subsystems;
 
 import au.grapplerobotics.ConfigurationFailedException;
 import au.grapplerobotics.LaserCan;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class LaserCannon {
+public class LaserCannon extends SubsystemBase {
 
     private LaserCan m_laserCan;
 
@@ -35,5 +36,10 @@ public class LaserCannon {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("LaserCannon Dist", this.getDistance());
     }
 }

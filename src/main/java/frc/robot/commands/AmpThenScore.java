@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.UpAndDownForever;
 import frc.robot.subsystems.Archerfish;
 import frc.robot.subsystems.Esophagus;
+import frc.robot.Constants;
 
 public class AmpThenScore extends Command {
   UpAndDownForever m_upDown;
@@ -24,7 +25,7 @@ public class AmpThenScore extends Command {
 
   @Override
   public void initialize() {
-    m_upDown.gotoSetpoint(Constants.UpAndDownForever.Setpoint.AMP);
+    m_upDown.gotoSetpoint(Constants.UpDownForever.Setpoint.AMP);
   }
 
   @Override
