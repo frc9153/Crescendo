@@ -49,7 +49,7 @@ public class Constants {
         public static final double upDownPIDEpsilon = 0.05;
 
         // Increase -> Down
-        public static final double setpointOffset = -0.02;// -0.0005
+        public static final double setpointOffset = 0.145;// -0.002
         public enum Setpoint {
             INTAKE(0.472+setpointOffset),
             SHOOT(0.450+setpointOffset),
@@ -77,7 +77,7 @@ public class Constants {
         public static final int archerfishId = 10;
         // "0.4 is the one that hit the ceiling light" -Cedric, hours ago
         // he did not say this..............Liar
-        public static final double archerfishSpeed = 0.6;
+        public static final double archerfishSpeed = 0.7;
         public static final double archerfishSpeedSlow = 0.3;
     }
 
