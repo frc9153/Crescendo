@@ -49,12 +49,12 @@ public class Constants {
         public static final double upDownPIDEpsilon = 0.05;
 
         // Increase -> Down
-        public static final double setpointOffset = 0.145;// -0.002
+        public static final double setpointOffset = -0.01;// -0.002
         public enum Setpoint {
             INTAKE(0.472+setpointOffset),
             SHOOT(0.450+setpointOffset),
             START(0.280+setpointOffset),
-            AMP(0.245+setpointOffset);
+            AMP(0.240+setpointOffset);
 
             private final double targetPosition;
             private Setpoint(double targetPosition) {
