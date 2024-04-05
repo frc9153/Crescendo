@@ -40,10 +40,15 @@ public class DriveSwerve extends SubsystemBase {
                         Constants.Drive.CAN.backRightSteerId,
                         Constants.Drive.Chassis.backRightChassisAngularOffset);
 
-        private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+        private TransformableGyro m_gyro;
 
         // Odometry class for tracking robot pose
-        SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
+        SwerveDriveOdometry m_odometry;
+
+        /** Creates a new DriveSwerve. */
+        public DriveSwerve(TransformableGyro gyro) {
+                m_gyro = gyro;
+                m_odometry = new SwerveDriveOdometry(
                         Constants.Drive.Chassis.driveKinematics,
                         Rotation2d.fromDegrees(m_gyro.getAngle()),
                         new SwerveModulePosition[] {
@@ -52,9 +57,6 @@ public class DriveSwerve extends SubsystemBase {
                                         m_backLeft.getPosition(),
                                         m_backRight.getPosition()
                         });
-
-        /** Creates a new DriveSwerve. */
-        public DriveSwerve() {
         }
 
         @Override

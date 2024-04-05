@@ -52,7 +52,7 @@ public class Constants {
         public static final double setpointOffset = -0.01;// -0.002
         public enum Setpoint {
             INTAKE(0.472+setpointOffset),
-            SHOOT(0.450+setpointOffset),
+            SHOOT(0.445+setpointOffset),
             START(0.280+setpointOffset),
             AMP(0.240+setpointOffset);
 
@@ -87,8 +87,8 @@ public class Constants {
         public static final double noteDistThreshold = 200.0;
     }
 
-    public class Drive {
-        public static final double maxSpeedMetersPerSec = 4.8; // Please do not kill anyone with this
+    public class Drive {//4.8
+        public static final double maxSpeedMetersPerSec = 4.46; // Please do not kill anyone with this
         public static final double maxRotSpeedRadsPerSec = Math.PI;
 
         public class Chassis {

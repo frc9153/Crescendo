@@ -44,6 +44,8 @@ public class Robot extends TimedRobot {
         m_chooser.addOption("Left Side Shoot; Mobility", m_robotContainer.m_leftShootMobility);
         m_chooser.addOption("Left Side Shoot; Correct", m_robotContainer.m_leftShootCorrect);
 
+        m_chooser.addOption("Mobility", m_robotContainer.m_mobility);
+
 
         SmartDashboard.putData("Autonomous Routine", m_chooser);
         SmartDashboard.putData(CommandScheduler.getInstance());
