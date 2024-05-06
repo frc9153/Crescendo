@@ -189,7 +189,7 @@ public class RobotContainer {
             new WaitCommand(0.5),
             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
             new WaitCommand(0.5),
-            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.3),
+            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7),
             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
             new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(0.65),
             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
@@ -203,7 +203,7 @@ public class RobotContainer {
             new WaitCommand(0.5),
             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
             new WaitCommand(0.5),
-            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.3));
+            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7));
             //new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
             //new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(0.65),
             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
@@ -216,7 +216,7 @@ public class RobotContainer {
             new WaitCommand(0.5),
             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
             new WaitCommand(0.5),
-            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.3),
+            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7),
             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
             new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.65),
             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
@@ -230,7 +230,7 @@ public class RobotContainer {
             new WaitCommand(0.5),
             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
             new WaitCommand(0.5),
-            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.3));
+            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7));
             //new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
             //new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.65),
             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));

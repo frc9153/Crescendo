@@ -45,7 +45,7 @@ public class Constants {
         public static final double upDownD = 5.0;
         public static final double upDownIZone = 0.0;
         public static final double upDownFF = 0.0;
-        public static final double upDownMaxSpeed = 0.20;// 0.25
+        public static final double upDownMaxSpeed = 0.15;// 0.20
         public static final double upDownPIDEpsilon = 0.05;
 
         // Increase -> Down
@@ -111,7 +111,6 @@ public class Constants {
         }
 
         public class CAN {
-            // TODO: FILLIN
             public static final int frontLeftThrustId = 7;
             public static final int frontRightThrustId = 1;
             public static final int backLeftThrustId = 5;
