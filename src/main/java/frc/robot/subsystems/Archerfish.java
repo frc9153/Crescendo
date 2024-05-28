@@ -5,19 +5,27 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVLibError;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Archerfish extends SubsystemBase {
     private CANSparkBase m_fireMotor;
+    private SparkPIDController m_fireMotorPID;
+    private RelativeEncoder m_fireMotorEncoder;
     private SlewRateLimiter m_filter = new SlewRateLimiter(0.65, -0.23, 0.0);
     private double m_targetSpeed = 0.0;
+    private double m_targetVelocity = 0.0;
 
 
     public Archerfish() {
@@ -28,28 +36,68 @@ public class Archerfish extends SubsystemBase {
         m_fireMotor.setIdleMode(IdleMode.kCoast);
         m_fireMotor.setInverted(true);
         m_fireMotor.burnFlash();
+
+        m_fireMotorEncoder = m_fireMotor.getEncoder();
+
+        m_fireMotorPID = m_fireMotor.getPIDController();
+        REVLibError e1 = m_fireMotorPID.setP(Constants.Archerfish.archerfishP);
+        REVLibError e2 = m_fireMotorPID.setI(Constants.Archerfish.archerfishI);
+        REVLibError e3 = m_fireMotorPID.setD(Constants.Archerfish.archerfishD);
+        REVLibError e4 = m_fireMotorPID.setIZone(Constants.Archerfish.archerfishIZone);
+        REVLibError e5 = m_fireMotorPID.setFF(Constants.Archerfish.archerfishFF);
+        REVLibError e6 = m_fireMotorPID.setOutputRange(
+                -Constants.Archerfish.archerfishMaxSpeed,
+                Constants.Archerfish.archerfishMaxSpeed);
+        REVLibError e7 = m_fireMotorPID.setFeedbackDevice(m_fireMotorEncoder);
+
+        System.out.println("EVIL PREEXISTING?:");
+        System.out.println(e1);
+        System.out.println(e2);
+        System.out.println(e3);
+        System.out.println(e4);
+        System.out.println(e5);
+        System.out.println(e6);
+        System.out.println(e7);
+
         CommandScheduler.getInstance().registerSubsystem(this);
     }
 
     private void setSpeed(double speed) {
         m_targetSpeed = speed;
-        //m_fireMotor.set(speed);
+    }
+
+    public void setVelocity(double velocity) {
+        m_targetVelocity = velocity;
+        REVLibError e = m_fireMotorPID.setReference(velocity, ControlType.kVelocity);
+        System.out.println("EVIL AFOOT?:");
+        System.out.println(e);
     }
 
     public void startSpin() {
-        setSpeed(Constants.Archerfish.archerfishSpeed);
+        // setSpeed(Constants.Archerfish.archerfishSpeed);
+        setVelocity(Constants.Archerfish.archerfishVelocity);
     }
 
     public void stopSpin() {
-        setSpeed(0.0);
+        // setSpeed(0.0);
+        setVelocity(0.0);
     }
 
     public void slowSpin() {
-        setSpeed(Constants.Archerfish.archerfishSpeedSlow);
+        // setSpeed(Constants.Archerfish.archerfishSpeedSlow);
+        setVelocity(Constants.Archerfish.archerfishVelocitySlow);
+    }
+
+    public void childSpin() {
+        // setSpeed(Constants.Archerfish.archerfishSpeedChild);
+        setVelocity(Constants.Archerfish.archerfishVelocityChild);
     }
 
     public boolean isAtSpeed() {
-        if (m_filter.calculate(m_targetSpeed) == m_targetSpeed) {
+        // if (m_filter.calculate(m_targetSpeed) == m_targetSpeed) {
+        //     return true;
+        // }
+        if (Math.abs(m_fireMotorEncoder.getVelocity() - m_targetVelocity) < Constants.Archerfish.archerfishPIDEpsilon) {
             return true;
         }
         return false;
@@ -57,7 +105,8 @@ public class Archerfish extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_fireMotor.set(m_filter.calculate(m_targetSpeed));
-        //m_fireMotor.set(m_targetSpeed);
+        // m_fireMotor.set(m_filter.calculate(m_targetSpeed));
+        //System.out.println(m_fireMotorEncoder.getVelocity());
+        SmartDashboard.putNumber("Archerfish Speed", m_fireMotorEncoder.getVelocity());
     }
 }

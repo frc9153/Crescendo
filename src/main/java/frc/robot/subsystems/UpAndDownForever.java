@@ -17,15 +17,19 @@ import frc.robot.Constants.UpDownForever.Setpoint;
 
 public class UpAndDownForever extends SubsystemBase {
     private Setpoint m_setpoint = Setpoint.START;
-    private final CANSparkMax m_motor;
+    private final CANSparkMax m_motor_one;
+    private final CANSparkMax m_motor_two;
     private final SparkPIDController m_PIDController;
     private final SparkAbsoluteEncoder m_encoder;
 
     public UpAndDownForever() {
-        m_motor = new CANSparkMax(Constants.UpDownForever.upDownMotorId, MotorType.kBrushless);
+        m_motor_one = new CANSparkMax(Constants.UpDownForever.upDownMotorIdOne, MotorType.kBrushless);
+        m_motor_two = new CANSparkMax(Constants.UpDownForever.upDownMotorIdTwo, MotorType.kBrushless);
 
-        m_PIDController = m_motor.getPIDController();
-        m_encoder = m_motor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
+        m_motor_two.follow(m_motor_one, true);
+
+        m_PIDController = m_motor_one.getPIDController();
+        m_encoder = m_motor_one.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
         // PID Config setup
         m_PIDController.setP(Constants.UpDownForever.upDownP);
@@ -38,8 +42,11 @@ public class UpAndDownForever extends SubsystemBase {
                 Constants.UpDownForever.upDownMaxSpeed);
         m_PIDController.setFeedbackDevice(m_encoder);
 
-        m_motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_motor.burnFlash();
+        m_motor_one.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_motor_one.burnFlash();
+
+        m_motor_two.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_motor_two.burnFlash();
     }
 
     public Setpoint getSetpoint() {
@@ -48,7 +55,11 @@ public class UpAndDownForever extends SubsystemBase {
 
     public void killItNow() {
         m_setpoint = Constants.UpDownForever.Setpoint.INTAKE;
-        m_motor.stopMotor();
+        m_motor_one.stopMotor();
+    }
+
+    public void setSpeed(double speed) {
+        m_motor_one.set(speed);
     }
 
     public void gotoSetpoint(Setpoint setpoint) {
@@ -59,6 +70,16 @@ public class UpAndDownForever extends SubsystemBase {
     public boolean isAtSetpoint() {
         return Math
                 .abs(m_setpoint.targetPosition() - m_encoder.getPosition()) <= Constants.UpDownForever.upDownPIDEpsilon;
+    }
+
+    public boolean isInBounds() {
+        double curr_pos = m_encoder.getPosition();
+        // manualLowerLimit = INTAKE, manualUpperLimit = AMP
+        // AMP is low, INTAKE is high
+        if (curr_pos < Constants.UpDownForever.manualLowerLimit && curr_pos > Constants.UpDownForever.manualUpperLimit) {
+            return true;
+        }
+        return false;
     }
 
     @Override

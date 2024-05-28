@@ -14,11 +14,11 @@ public class IntakeCommand extends Command {
 
   @Override
   public void initialize() {
+    m_esophagus.startFeeding();
   }
 
   @Override
   public void execute() {
-    m_esophagus.startFeeding();
   }
 
   @Override

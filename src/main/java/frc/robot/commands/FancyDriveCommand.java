@@ -27,6 +27,7 @@ public class FancyDriveCommand extends Command {
   }
 
   private Vector2 currentOffset() {
+    // Because the rio and navex are not aligned with wheels, I think this should be (-Y, X)
     return Vector2.Zero();
     // return new Vector2(gyro.getDisplacementX(), gyro.getDisplacementY());
   }
@@ -37,6 +38,7 @@ public class FancyDriveCommand extends Command {
   }
 
   @Override public void execute() {
+    // Double-checked, and all this math should be correct - Cedric
     Vector2 weAreHere = currentOffset();
     SmartDashboard.putString("we're here", weAreHere.toString());
     Vector2 targetDirection = weAreHere.minus(m_targetOffset).normalized().multBy(-1.0);
@@ -53,6 +55,6 @@ public class FancyDriveCommand extends Command {
   @Override
   public boolean isFinished() {
     //return currentOffset().distanceTo(m_targetOffset) < EPSILON || currentOffset().magnitude() > 1.2 * ;
-    return currentOffset().magnitude() >= m_targetOffset.magnitude();
+    return currentOffset().magnitude() >= m_targetOffset.magnitude(); // This condition does not seem correct - Cedric
   }
 }

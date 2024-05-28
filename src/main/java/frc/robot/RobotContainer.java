@@ -21,6 +21,8 @@ import frc.robot.commands.AmpThenScore;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.FancyDriveCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.KidSafeWindThenScore;
+import frc.robot.commands.ManualUpDownCommand;
 import frc.robot.commands.UpDownCommand;
 import frc.robot.commands.WindThenScore;
 import frc.robot.subsystems.Archerfish;
@@ -37,8 +39,10 @@ import frc.robot.utils.Vector2;
 public class RobotContainer {
     CommandJoystick m_driverJoystick = new CommandJoystick(Constants.HID.driverJoystickPort); // That logitech scary
                                                                                               // airplane looking thing
-    TransformableGyro m_gyro = new TransformableGyro();
     CommandXboxController m_operatorController = new CommandXboxController(Constants.HID.operatorJoystickPort);
+    CommandJoystick m_childJoystick = new CommandJoystick(Constants.HID.childJoystickPort); // For kids at Peach Festival to
+                                                                                            // prevent unscheduled disassembly
+    TransformableGyro m_gyro = new TransformableGyro();
     DriveSwerve m_driveSwerve = new DriveSwerve(m_gyro);
     UpAndDownForever m_upDown = new UpAndDownForever(); // Shoulder type thing
     LaserCannon m_laserCannon = new LaserCannon(); // Intake Sensor
@@ -353,6 +357,7 @@ public class RobotContainer {
         magicAimButton.onTrue(new InstantCommand(() -> m_aiming = true));
         magicAimButton.onFalse(new InstantCommand(() -> m_aiming = false));
 
+        // Twist modified for Peach Festival compatibility
         m_driveSwerve.setDefaultCommand(
                 // Inline command instantiation--will run a lot forever. Runs first lambda arg
                 // as command code and locks following args as requirements
@@ -362,9 +367,23 @@ public class RobotContainer {
                                         .deadband(Constants.HID.driverJoystickDeadband)
                                         .multBy(
                                                 1.0 - (m_driverJoystick.getThrottle() + 1.0) / 2.0),
-                                -m_driverJoystick.getTwist(),
+                                (Math.abs(m_childJoystick.getTwist()) > Math.abs(m_driverJoystick.getTwist())) ? -(m_childJoystick.getTwist()*0.5) : -m_driverJoystick.getTwist(),
                                 !m_driverJoystick.button(Constants.HID.Binds.Driver.robotOrientedDriveButton)
                                         .getAsBoolean()),
                         m_driveSwerve));
+        
+
+        // Peach Festival disaster averting alternate safety controls
+
+        Trigger childIntakeButton = m_childJoystick.button(Constants.HID.Binds.Child.intakeButton);
+        childIntakeButton.whileTrue(new IntakeCommand(m_esophagus));
+
+        Trigger childShootButton = m_childJoystick.button(Constants.HID.Binds.Child.shootButton);
+        childShootButton.whileTrue(new KidSafeWindThenScore(m_archerfish, m_esophagus));
+
+        Trigger childManualArmUp = m_childJoystick.povUp();
+        Trigger childManualArmDown = m_childJoystick.povDown();
+        childManualArmUp.whileTrue(new ManualUpDownCommand(m_upDown, () -> -Constants.UpDownForever.manualSpeed));
+        childManualArmDown.whileTrue(new ManualUpDownCommand(m_upDown, () -> Constants.UpDownForever.manualSpeed));
     }
 }

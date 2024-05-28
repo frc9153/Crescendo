@@ -10,6 +10,7 @@ public class Constants {
     public class HID {
         public static final int driverJoystickPort = 0;
         public static final int operatorJoystickPort = 1;
+        public static final int childJoystickPort = 2; // Child-safe joystick for Peach Festival
         public static final double driverJoystickDeadband = 0.1;
 
         public class Binds {
@@ -28,6 +29,11 @@ public class Constants {
                 public static final int shooterSlowButton = 6;
             }
 
+            public class Child {
+                public static final int shootButton = 1;
+                public static final int intakeButton = 2;
+            }
+
         }
     }
 
@@ -39,22 +45,25 @@ public class Constants {
     }
     
     public class UpDownForever {
-        public static final int upDownMotorId = 11;
-        public static final double upDownP = 4.0;
-        public static final double upDownI = 0.0;
-        public static final double upDownD = 5.0;
+        public static final int upDownMotorIdOne = 11;
+        public static final int upDownMotorIdTwo = 15;
+        public static final double upDownP = 8.0; // 4.0
+        public static final double upDownI = 0.0; // 0.0
+        public static final double upDownD = 4.0; // 5.0
         public static final double upDownIZone = 0.0;
         public static final double upDownFF = 0.0;
-        public static final double upDownMaxSpeed = 0.15;// 0.20
+        public static final double upDownMaxSpeed = 0.50;// 0.35 tested up to 0.50
         public static final double upDownPIDEpsilon = 0.05;
 
+        public static final double manualSpeed = 0.13;
+
         // Increase -> Down
-        public static final double setpointOffset = -0.01;// -0.002
+        public static final double setpointOffset = 0.0;// 
         public enum Setpoint {
             INTAKE(0.472+setpointOffset),
             SHOOT(0.445+setpointOffset),
             START(0.280+setpointOffset),
-            AMP(0.240+setpointOffset);
+            AMP(0.232+setpointOffset);
 
             private final double targetPosition;
             private Setpoint(double targetPosition) {
@@ -65,6 +74,8 @@ public class Constants {
                 return targetPosition;
             }
         };
+        public static final double manualLowerLimit = 0.472+setpointOffset;
+        public static final double manualUpperLimit = 0.232+setpointOffset;
     }
 
     public class Esophagus {
@@ -77,8 +88,24 @@ public class Constants {
         public static final int archerfishId = 10;
         // "0.4 is the one that hit the ceiling light" -Cedric, hours ago
         // he did not say this..............Liar
-        public static final double archerfishSpeed = 0.7;
-        public static final double archerfishSpeedSlow = 0.3;
+        
+        public static final double archerfishP = 0.00002; // 0.6
+        public static final double archerfishI = 0.00000000015; // 0.0
+        public static final double archerfishD = 0.0;
+        public static final double archerfishIZone = 0.0;
+        public static final double archerfishFF = 0.00000481; // 0.15
+        public static final double archerfishMaxSpeed = 0.80;
+        public static final double archerfishPIDEpsilon = 50; // rpm, so very high
+
+        // Percent Motor Power (old)
+        public static final double archerfishSpeed = 0.7;//0.7
+        public static final double archerfishSpeedChild = 0.5;
+        public static final double archerfishSpeedSlow = 0.3;//0.3
+        
+        // Velocity in rpm (new)
+        public static final double archerfishVelocity = 2000; // Dummy values, probably something more like 2000
+        public static final double archerfishVelocityChild = 100;
+        public static final double archerfishVelocitySlow = 50;
     }
 
     public class LaserCannon {
