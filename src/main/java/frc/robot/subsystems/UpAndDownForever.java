@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVLibError;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
@@ -82,8 +83,28 @@ public class UpAndDownForever extends SubsystemBase {
         return false;
     }
 
+    public boolean outOfBoundsDown() {
+        double curr_pos = m_encoder.getPosition();
+        // manualLowerLimit = INTAKE, manualUpperLimit = AMP
+        // AMP is low, INTAKE is high
+        if (curr_pos > Constants.UpDownForever.manualLowerLimit) {
+            return true;
+        }
+        return false;
+    }
+    public boolean outOfBoundsUp() {
+        double curr_pos = m_encoder.getPosition();
+        // manualLowerLimit = INTAKE, manualUpperLimit = AMP
+        // AMP is low, INTAKE is high
+        if (curr_pos < Constants.UpDownForever.manualUpperLimit) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("updown encoder", m_encoder.getPosition());
+        SmartDashboard.putBoolean("isInBounds", isInBounds());
     }
 }

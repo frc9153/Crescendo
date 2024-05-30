@@ -12,6 +12,9 @@ public class Constants {
         public static final int operatorJoystickPort = 1;
         public static final int childJoystickPort = 2; // Child-safe joystick for Peach Festival
         public static final double driverJoystickDeadband = 0.1;
+        public static final double driverJoystickTwistDeadband = 0.1;
+
+        public static final double childJoystickTwistDeadband = 0.15;
 
         public class Binds {
             public class Driver {
@@ -32,6 +35,7 @@ public class Constants {
             public class Child {
                 public static final int shootButton = 1;
                 public static final int intakeButton = 2;
+                public static final int intakeReverseButton = 3;
             }
 
         }
@@ -55,7 +59,8 @@ public class Constants {
         public static final double upDownMaxSpeed = 0.50;// 0.35 tested up to 0.50
         public static final double upDownPIDEpsilon = 0.05;
 
-        public static final double manualSpeed = 0.13;
+        public static final double stopFromFallingSpeed = -0.018;
+        public static final double manualSpeed = -0.15;
 
         // Increase -> Down
         public static final double setpointOffset = 0.0;// 
@@ -74,7 +79,7 @@ public class Constants {
                 return targetPosition;
             }
         };
-        public static final double manualLowerLimit = 0.472+setpointOffset;
+        public static final double manualLowerLimit = 0.445+setpointOffset;
         public static final double manualUpperLimit = 0.232+setpointOffset;
     }
 
@@ -90,7 +95,7 @@ public class Constants {
         // he did not say this..............Liar
         
         public static final double archerfishP = 0.00002; // 0.6
-        public static final double archerfishI = 0.00000000015; // 0.0
+        public static final double archerfishI = 0.0; // 0.00000000015
         public static final double archerfishD = 0.0;
         public static final double archerfishIZone = 0.0;
         public static final double archerfishFF = 0.00000481; // 0.15
@@ -103,9 +108,9 @@ public class Constants {
         public static final double archerfishSpeedSlow = 0.3;//0.3
         
         // Velocity in rpm (new)
-        public static final double archerfishVelocity = 2000; // Dummy values, probably something more like 2000
-        public static final double archerfishVelocityChild = 100;
-        public static final double archerfishVelocitySlow = 50;
+        public static final double archerfishVelocity = 3700; // Dummy values, probably something more like 2000
+        public static final double archerfishVelocityChild = 2000;
+        public static final double archerfishVelocitySlow = 1000;
     }
 
     public class LaserCannon {

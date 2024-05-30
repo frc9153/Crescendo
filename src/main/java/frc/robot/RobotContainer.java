@@ -319,6 +319,14 @@ public class RobotContainer {
         m_driveSwerve.drive(speed, rotSpeed, isFieldRelative);
     }
 
+    private double deadband(double joystick_input, double deadband_size) {
+        if (Math.abs(joystick_input) < deadband_size) {
+            return 0.0;
+        }else {
+            return joystick_input;
+        }
+    }
+
     private void configureBindings() {
         Trigger resetSwerveHeadingButton = m_driverJoystick.button(Constants.HID.Binds.Driver.resetSwerveHeadingButton);
         resetSwerveHeadingButton.onTrue(new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
@@ -346,12 +354,24 @@ public class RobotContainer {
         Trigger fireButton = m_operatorController.rightTrigger(0.3);
         fireButton.whileTrue(new WindThenScore(m_archerfish, m_esophagus));
 
-        Trigger climberPullButton = m_operatorController.pov(0);
-        Trigger climberPushButton = m_operatorController.pov(180);
+        Trigger climberPullButton = m_operatorController.povUp();
+        Trigger climberPullButton2 = m_operatorController.povUpLeft();
+        Trigger climberPullButton3 = m_operatorController.povUpRight();
+        Trigger climberPushButton = m_operatorController.povDown();
+        Trigger climberPushButton2 = m_operatorController.povDownLeft();
+        Trigger climberPushButton3 = m_operatorController.povDownRight();
         climberPullButton.onTrue(new InstantCommand(() -> m_climber.startClimb(), m_climber));
         climberPullButton.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
+        climberPullButton2.onTrue(new InstantCommand(() -> m_climber.startClimb(), m_climber));
+        climberPullButton2.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
+        climberPullButton3.onTrue(new InstantCommand(() -> m_climber.startClimb(), m_climber));
+        climberPullButton3.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
         climberPushButton.onTrue(new InstantCommand(() -> m_climber.startUnclimb(), m_climber));
         climberPushButton.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
+        climberPushButton2.onTrue(new InstantCommand(() -> m_climber.startUnclimb(), m_climber));
+        climberPushButton2.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
+        climberPushButton3.onTrue(new InstantCommand(() -> m_climber.startUnclimb(), m_climber));
+        climberPushButton3.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
 
         Trigger magicAimButton = m_driverJoystick.button(Constants.HID.Binds.Driver.magicAimButton);
         magicAimButton.onTrue(new InstantCommand(() -> m_aiming = true));
@@ -367,7 +387,9 @@ public class RobotContainer {
                                         .deadband(Constants.HID.driverJoystickDeadband)
                                         .multBy(
                                                 1.0 - (m_driverJoystick.getThrottle() + 1.0) / 2.0),
-                                (Math.abs(m_childJoystick.getTwist()) > Math.abs(m_driverJoystick.getTwist())) ? -(m_childJoystick.getTwist()*0.5) : -m_driverJoystick.getTwist(),
+                                (Math.abs(m_childJoystick.getTwist()) > Math.abs(m_driverJoystick.getTwist())) ? 
+                                        -deadband(m_childJoystick.getTwist()*0.5, Constants.HID.childJoystickTwistDeadband) : 
+                                        -deadband(m_driverJoystick.getTwist(), Constants.HID.driverJoystickTwistDeadband),
                                 !m_driverJoystick.button(Constants.HID.Binds.Driver.robotOrientedDriveButton)
                                         .getAsBoolean()),
                         m_driveSwerve));
@@ -378,12 +400,20 @@ public class RobotContainer {
         Trigger childIntakeButton = m_childJoystick.button(Constants.HID.Binds.Child.intakeButton);
         childIntakeButton.whileTrue(new IntakeCommand(m_esophagus));
 
+        Trigger childIntakeReverseButton = m_childJoystick.button(Constants.HID.Binds.Child.intakeReverseButton);
+        childIntakeReverseButton.onTrue(new InstantCommand(() -> m_esophagus.startReverse(), m_esophagus));
+        childIntakeReverseButton.onFalse(new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus));
+
         Trigger childShootButton = m_childJoystick.button(Constants.HID.Binds.Child.shootButton);
         childShootButton.whileTrue(new KidSafeWindThenScore(m_archerfish, m_esophagus));
 
         Trigger childManualArmUp = m_childJoystick.povUp();
         Trigger childManualArmDown = m_childJoystick.povDown();
-        childManualArmUp.whileTrue(new ManualUpDownCommand(m_upDown, () -> -Constants.UpDownForever.manualSpeed));
-        childManualArmDown.whileTrue(new ManualUpDownCommand(m_upDown, () -> Constants.UpDownForever.manualSpeed));
+        childManualArmUp.whileTrue(new ManualUpDownCommand(m_upDown, () -> Constants.UpDownForever.manualSpeed));
+        childManualArmDown.whileTrue(new ManualUpDownCommand(m_upDown, () -> -Constants.UpDownForever.manualSpeed));
+
+        // Not default command so that to setpoint commands override
+        childManualArmUp.onFalse(new ManualUpDownCommand(m_upDown, () -> Constants.UpDownForever.stopFromFallingSpeed));
+        childManualArmDown.onFalse(new ManualUpDownCommand(m_upDown, () -> Constants.UpDownForever.stopFromFallingSpeed));
     }
 }

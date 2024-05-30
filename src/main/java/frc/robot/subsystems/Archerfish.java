@@ -25,6 +25,7 @@ public class Archerfish extends SubsystemBase {
     private RelativeEncoder m_fireMotorEncoder;
     private SlewRateLimiter m_filter = new SlewRateLimiter(0.65, -0.23, 0.0);
     private double m_targetSpeed = 0.0;
+    private SlewRateLimiter m_velocityLimiter = new SlewRateLimiter(6000, -2700, 0.0);
     private double m_targetVelocity = 0.0;
 
 
@@ -40,24 +41,24 @@ public class Archerfish extends SubsystemBase {
         m_fireMotorEncoder = m_fireMotor.getEncoder();
 
         m_fireMotorPID = m_fireMotor.getPIDController();
-        REVLibError e1 = m_fireMotorPID.setP(Constants.Archerfish.archerfishP);
-        REVLibError e2 = m_fireMotorPID.setI(Constants.Archerfish.archerfishI);
-        REVLibError e3 = m_fireMotorPID.setD(Constants.Archerfish.archerfishD);
-        REVLibError e4 = m_fireMotorPID.setIZone(Constants.Archerfish.archerfishIZone);
-        REVLibError e5 = m_fireMotorPID.setFF(Constants.Archerfish.archerfishFF);
-        REVLibError e6 = m_fireMotorPID.setOutputRange(
-                -Constants.Archerfish.archerfishMaxSpeed,
-                Constants.Archerfish.archerfishMaxSpeed);
+        // REVLibError e1 = m_fireMotorPID.setP(Constants.Archerfish.archerfishP);//kHALerror
+        // REVLibError e2 = m_fireMotorPID.setI(Constants.Archerfish.archerfishI);//kHALerror
+        // REVLibError e3 = m_fireMotorPID.setD(Constants.Archerfish.archerfishD);//kHALerror
+        // REVLibError e4 = m_fireMotorPID.setIZone(Constants.Archerfish.archerfishIZone);//kHALerror
+        // REVLibError e5 = m_fireMotorPID.setFF(Constants.Archerfish.archerfishFF);
+        // REVLibError e6 = m_fireMotorPID.setOutputRange(
+        //         -Constants.Archerfish.archerfishMaxSpeed,
+        //         Constants.Archerfish.archerfishMaxSpeed);
         REVLibError e7 = m_fireMotorPID.setFeedbackDevice(m_fireMotorEncoder);
 
-        System.out.println("EVIL PREEXISTING?:");
-        System.out.println(e1);
-        System.out.println(e2);
-        System.out.println(e3);
-        System.out.println(e4);
-        System.out.println(e5);
-        System.out.println(e6);
-        System.out.println(e7);
+        // System.out.println("EVIL PREEXISTING?:");
+        // System.out.println(e1);
+        // System.out.println(e2);
+        // System.out.println(e3);
+        // System.out.println(e4);
+        // System.out.println(e5);
+        // System.out.println(e6);
+        // System.out.println(e7);
 
         CommandScheduler.getInstance().registerSubsystem(this);
     }
@@ -68,9 +69,11 @@ public class Archerfish extends SubsystemBase {
 
     public void setVelocity(double velocity) {
         m_targetVelocity = velocity;
-        REVLibError e = m_fireMotorPID.setReference(velocity, ControlType.kVelocity);
-        System.out.println("EVIL AFOOT?:");
-        System.out.println(e);
+    }
+
+    public void jerkToSpin() {
+        setVelocity(Constants.Archerfish.archerfishVelocity);
+        m_velocityLimiter.reset(m_targetVelocity);
     }
 
     public void startSpin() {
@@ -105,8 +108,14 @@ public class Archerfish extends SubsystemBase {
 
     @Override
     public void periodic() {
+
         // m_fireMotor.set(m_filter.calculate(m_targetSpeed));
         //System.out.println(m_fireMotorEncoder.getVelocity());
+
+        m_fireMotorPID.setReference(m_velocityLimiter.calculate(m_targetVelocity), ControlType.kVelocity);
+
         SmartDashboard.putNumber("Archerfish Speed", m_fireMotorEncoder.getVelocity());
+        SmartDashboard.putNumber("Archerfish Target", m_targetVelocity);
+        SmartDashboard.putNumber("Archerfish Applied Voltage", m_fireMotor.getAppliedOutput());
     }
 }

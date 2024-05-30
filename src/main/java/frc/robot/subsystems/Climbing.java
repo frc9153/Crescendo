@@ -30,10 +30,12 @@ public class Climbing extends SubsystemBase {
     m_leftClimbMotor = new CANSparkMax(Constants.Climbing.leftMotorId, MotorType.kBrushless);
     m_rightClimbMotor = new CANSparkMax(Constants.Climbing.rightMotorId, MotorType.kBrushless);
 
-    m_leftLimitSwitch = m_leftClimbMotor.getReverseLimitSwitch(Type.kNormallyOpen);
-    m_leftLimitSwitch.enableLimitSwitch(true);
+    // m_leftLimitSwitch = m_leftClimbMotor.getReverseLimitSwitch(Type.kNormallyOpen);
+    // m_leftLimitSwitch.enableLimitSwitch(true);
 
-    m_rightLimitSwitch = m_leftClimbMotor.getForwardLimitSwitch(Type.kNormallyOpen);
+    // m_rightLimitSwitch = m_leftClimbMotor.getForwardLimitSwitch(Type.kNormallyOpen);
+
+    // m_rightClimbMotor.follow(m_leftClimbMotor, false);
 
     for (CANSparkBase motor : Arrays.asList(m_leftClimbMotor, m_rightClimbMotor)) {
       motor.setIdleMode(IdleMode.kBrake);
@@ -45,6 +47,7 @@ public class Climbing extends SubsystemBase {
     for (CANSparkBase motor : Arrays.asList(m_leftClimbMotor, m_rightClimbMotor)) {
       motor.set(speed);
     }
+    // m_leftClimbMotor.set(speed);
   }
 
   public void startClimb() {
@@ -61,6 +64,6 @@ public class Climbing extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (m_rightLimitSwitch.isPressed()) m_rightClimbMotor.set(0.0);
+    // if (m_rightLimitSwitch.isPressed()) m_rightClimbMotor.set(0.0);
   }
 }

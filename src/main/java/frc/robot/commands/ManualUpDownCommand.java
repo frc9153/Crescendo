@@ -37,6 +37,10 @@ public class ManualUpDownCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_upDown.isInBounds();
+    if (m_speed.getAsDouble() > 0) {
+      return m_upDown.outOfBoundsDown();
+    }else {
+      return m_upDown.outOfBoundsUp();
+    }
   }
 }

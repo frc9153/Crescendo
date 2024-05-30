@@ -14,6 +14,7 @@ public class AmpThenScore extends Command {
   UpAndDownForever m_upDown;
   Archerfish m_archerfish;
   Esophagus m_esophagus;
+  private long start_time;
 
   public AmpThenScore(UpAndDownForever upDown, Archerfish archerfish, Esophagus esophagus) {
     m_upDown = upDown;
@@ -26,11 +27,17 @@ public class AmpThenScore extends Command {
   @Override
   public void initialize() {
     m_upDown.gotoSetpoint(Constants.UpDownForever.Setpoint.AMP);
+    start_time = System.currentTimeMillis();
   }
 
   @Override
   public void execute() {
     if (m_upDown.isAtSetpoint()) {
+        if (start_time != -1) {
+            System.out.print("Arm travel time: ");
+            System.out.println(System.currentTimeMillis()-start_time);
+            start_time = -1;
+        }
         m_esophagus.startFeeding();
         m_archerfish.slowSpin();
     }
