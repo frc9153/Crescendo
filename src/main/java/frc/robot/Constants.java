@@ -27,6 +27,8 @@ public class Constants {
                 public static final int armAmpButton = 4;
                 public static final int intakeReverseButton = 5;
                 public static final int shooterSlowButton = 6;
+                
+                public static final int manualArmTriggerButton = 8; // Should be Start, double check
             }
 
             public class Child {

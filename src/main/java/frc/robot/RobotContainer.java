@@ -25,6 +25,7 @@ import frc.robot.commands.KidSafeWindThenScore;
 import frc.robot.commands.ManualUpDownCommand;
 import frc.robot.commands.UpDownCommand;
 import frc.robot.commands.WindThenScore;
+import frc.robot.commands.BooleanTriggeredManualUpDownCommand;
 import frc.robot.subsystems.Archerfish;
 import frc.robot.subsystems.Climbing;
 import frc.robot.subsystems.DriveSwerve;
@@ -352,6 +353,10 @@ public class RobotContainer {
         climberPullButton.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
         climberPushButton.onTrue(new InstantCommand(() -> m_climber.startUnclimb(), m_climber));
         climberPushButton.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
+
+        // Double check this with the driver station before running anything
+        Trigger manualArmTrigger = m_operatorController.button(Constants.HID.Operator.manualArmTriggerButton);
+        manualArmTrigger.whileTrue(new BooleanTriggeredManualUpDownCommand(m_upDown, () -> -m_operatorController.getX(), () -> manualArmTrigger));
 
         Trigger magicAimButton = m_driverJoystick.button(Constants.HID.Binds.Driver.magicAimButton);
         magicAimButton.onTrue(new InstantCommand(() -> m_aiming = true));
