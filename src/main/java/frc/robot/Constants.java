@@ -116,6 +116,15 @@ public class Constants {
         public static final double noteDistThreshold = 200.0;
     }
 
+    public class Autonomous {
+        public static final double autoSpeed = 0.3363;
+        
+        public class Speaker_Front {
+            public static final double SpeakerToSpikeMark = 1.0;
+            public static final double SpikeMarkToSpikeMark = 0.7;
+        }
+    }
+
     public class Drive {//4.8
         public static final double maxSpeedMetersPerSec = 4.46; // Please do not kill anyone with this
         public static final double maxRotSpeedRadsPerSec = Math.PI;

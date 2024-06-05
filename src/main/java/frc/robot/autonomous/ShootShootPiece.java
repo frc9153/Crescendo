@@ -19,16 +19,23 @@ import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
 public class ShootShootPiece extends SequentialCommandGroup {
+    public double speed;
+    public double dist_to_note;
+    public double side_dist;
 
     public ShootShootPiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+        speed = Constants.Autonomous.autoSpeed;
+        dist_to_note = (Constants.Autonomous.Speaker_Front.SpeakerToSpikeMark/speed);
+        side_dist = (Constants.Autonomous.Speaker_Front.SpikeMarkToSpikeMark/speed);
+
         addCommands(
-            new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
+            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(dist_to_note/2),
             new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(0, 0.3363), 0, false).withTimeout(0.5),
+                new DriveCommand(m_driveSwerve, new Vector2(0, speed), 0, false).withTimeout(side_dist),
                 new SequentialCommandGroup(
                     new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE)),
             new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
+                new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(dist_to_note/2),
                 new IntakeCommand(m_esophagus).withTimeout(2.0))),
         )
     }
