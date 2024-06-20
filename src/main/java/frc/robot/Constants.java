@@ -117,14 +117,20 @@ public class Constants {
     }
 
     public class Autonomous {
-        public static final double autoSpeed = 0.3363;
+        public static final double autoSpeed = 0.45;
         
         public static final double inchToSpeedless = 0.0042;
 
         public class Speaker_Front {
             public static final double SpeakerToSpikeMark = 80*inchToSpeedless; // Speedless measure
-            public static final double SpikeMarkToSpikeMark = 55*inchToSpeedless;
+            public static final double SpikeMarkToSpikeMark = 70*inchToSpeedless;
+            // (SpeakerFrontFudgeDistance)
+
+            public static final double SideMobility = 80*inchToSpeedless;
+            public static final double SidePieceSlant = 60*inchToSpeedless;
+            public static final double SidePieceSpikeMark = 60*inchToSpeedless;
         }
+        public static final double Turn60 = 0.65;
     }
 
     public class Drive {//4.8

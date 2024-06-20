@@ -23,6 +23,6 @@ public class ShootDoNothing extends SequentialCommandGroup {
                 new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1),
                 new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT)),
             new WindThenScore(m_archerfish, m_esophagus).withTimeout(1.5)
-        )
+        );
     }
 }

@@ -42,11 +42,13 @@ public class Robot extends TimedRobot {
         m_chooser.addOption("Shoot; Piece", m_robotContainer.m_ShootPiece);
         m_chooser.addOption("Shoot; Do Nothing", m_robotContainer.m_ShootDoNothing);
 
-        // m_chooser.addOption("Right Side Shoot; Mobility", m_robotContainer.m_rightShootMobility);
-        // m_chooser.addOption("Right Side Shoot; Correct", m_robotContainer.m_rightShootCorrect);
+        m_chooser.addOption("Right Side Shoot; Piece", m_robotContainer.m_RightSideShootPiece);
+        m_chooser.addOption("Right Side Shoot; Mobility", m_robotContainer.m_RightShootMobility);
+        m_chooser.addOption("Right Side Shoot; Correct", m_robotContainer.m_RightShootCorrect);
         
-        // m_chooser.addOption("Left Side Shoot; Mobility", m_robotContainer.m_leftShootMobility);
-        // m_chooser.addOption("Left Side Shoot; Correct", m_robotContainer.m_leftShootCorrect);
+        m_chooser.addOption("Left Side Shoot; Piece", m_robotContainer.m_LeftSideShootPiece);
+        m_chooser.addOption("Left Side Shoot; Mobility", m_robotContainer.m_LeftShootMobility);
+        m_chooser.addOption("Left Side Shoot; Correct", m_robotContainer.m_LeftShootCorrect);
 
         // m_chooser.addOption("Mobility", m_robotContainer.m_mobility);
 

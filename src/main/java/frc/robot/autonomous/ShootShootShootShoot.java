@@ -38,6 +38,6 @@ public class ShootShootShootShoot extends SequentialCommandGroup {
                     new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1))),
             new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, false).withTimeout(dist_to_note),
             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.5)
-        )
+        );
     }
 }

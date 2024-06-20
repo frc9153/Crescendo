@@ -33,10 +33,10 @@ public class ShootShootShootPiece extends SequentialCommandGroup {
             new ParallelCommandGroup(
                 new DriveCommand(m_driveSwerve, new Vector2(0, -speed), 0, false).withTimeout(side_dist),
                 new SequentialCommandGroup(
-                    new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE)),
+                    new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE))),
             new ParallelCommandGroup(
                 new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(dist_to_note/2),
-                new IntakeCommand(m_esophagus).withTimeout(2.0))),
-        )
+                new IntakeCommand(m_esophagus).withTimeout(2.0))
+        );
     }
 }

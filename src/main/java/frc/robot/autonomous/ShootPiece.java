@@ -32,6 +32,6 @@ public class ShootPiece extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                     new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
                     new IntakeCommand(m_esophagus).withTimeout(2.0)))
-        )
+        );
     }
 }
