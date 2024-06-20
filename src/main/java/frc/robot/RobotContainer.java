@@ -18,16 +18,20 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.UpDownForever.Setpoint;
 import frc.robot.autonomous.ShootDoNothing;
-import frc.robot.autonomous.ShootPiece;
-import frc.robot.autonomous.ShootShoot;
-import frc.robot.autonomous.ShootShootPiece;
-import frc.robot.autonomous.ShootShootShoot;
-import frc.robot.autonomous.ShootShootShootPiece;
-import frc.robot.autonomous.ShootShootShootShoot;
+import frc.robot.autonomous.CenterPiece;
+import frc.robot.autonomous.CenterShoot;
+import frc.robot.autonomous.CenterLeftPiece;
+import frc.robot.autonomous.CenterLeftShoot;
+import frc.robot.autonomous.CenterRightPiece;
+import frc.robot.autonomous.CenterRightShoot;
 import frc.robot.autonomous.RightSideHeadingCorrect;
 import frc.robot.autonomous.LeftSideHeadingCorrect;
 import frc.robot.autonomous.RightSidePiece;
 import frc.robot.autonomous.LeftSidePiece;
+import frc.robot.autonomous.RightSideShoot;
+import frc.robot.autonomous.LeftSideShoot;
+import frc.robot.autonomous.RightSideRush;
+import frc.robot.autonomous.LeftSideRush;
 import frc.robot.autonomous.SideMobility;
 import frc.robot.commands.AmpThenScore;
 import frc.robot.commands.DriveCommand;
@@ -74,42 +78,55 @@ public class RobotContainer {
     );
     public final Command m_ShootPiece = new SequentialCommandGroup(
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
     public final Command m_ShootShoot = new SequentialCommandGroup(
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
-    public final Command m_ShootShootPiece = new SequentialCommandGroup(
+    public final Command m_ShootShootRightPiece = new SequentialCommandGroup(
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterRightPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
-    public final Command m_ShootShootShoot = new SequentialCommandGroup(
+    public final Command m_ShootShootRightShoot = new SequentialCommandGroup(
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterRightPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterRightShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_ShootShootLeftPiece = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterLeftPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_ShootShootLeftShoot = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterLeftPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterLeftShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
     public final Command m_ShootShootShootPiece = new SequentialCommandGroup(
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterRightPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterRightShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterLeftPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
     public final Command m_ShootShootShootShoot = new SequentialCommandGroup(
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-        new ShootShootShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterRightPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterRightShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterLeftPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterLeftShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
     public final Command m_RightSideShootCorrect = new SequentialCommandGroup(
         new RightSideHeadingCorrect(m_gyro),
@@ -125,6 +142,18 @@ public class RobotContainer {
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new RightSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
+    public final Command m_RightSideShootShoot = new SequentialCommandGroup(
+        new RightSideHeadingCorrect(m_gyro),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new RightSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new RightSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_RightSideShootRush = new SequentialCommandGroup(
+        new RightSideHeadingCorrect(m_gyro),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SideMobility(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new RightSideRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
     public final Command m_LeftSideShootCorrect = new SequentialCommandGroup(
         new LeftSideHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
@@ -138,6 +167,18 @@ public class RobotContainer {
         new LeftSideHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new LeftSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_LeftSideShootPiece = new SequentialCommandGroup(
+        new LeftSideHeadingCorrect(m_gyro),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new LeftSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new LeftSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_LeftSideShootRush = new SequentialCommandGroup(
+        new LeftSideHeadingCorrect(m_gyro),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SideMobility(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new LeftSideRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
 
     public RobotContainer() {

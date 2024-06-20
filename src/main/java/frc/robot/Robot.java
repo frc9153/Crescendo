@@ -36,16 +36,22 @@ public class Robot extends TimedRobot {
 
         m_chooser.addOption("Shoot; Shoot; Shoot; Shoot", m_robotContainer.m_ShootShootShootShoot);
         m_chooser.addOption("Shoot; Shoot; Shoot; Piece", m_robotContainer.m_ShootShootShootPiece);
-        m_chooser.addOption("Shoot; Shoot; Shoot", m_robotContainer.m_ShootShootShoot);
-        m_chooser.addOption("Shoot; Shoot; Piece", m_robotContainer.m_ShootShootPiece);
+        m_chooser.addOption("Shoot; Shoot; Right Shoot", m_robotContainer.m_ShootShootRightShoot);
+        m_chooser.addOption("Shoot; Shoot; Right Piece", m_robotContainer.m_ShootShootRightPiece);
+        m_chooser.addOption("Shoot; Shoot; Left Shoot", m_robotContainer.m_ShootShootLeftShoot);
+        m_chooser.addOption("Shoot; Shoot; Left Piece", m_robotContainer.m_ShootShootLeftPiece);
         m_chooser.addOption("Shoot; Shoot", m_robotContainer.m_ShootShoot);
         m_chooser.addOption("Shoot; Piece", m_robotContainer.m_ShootPiece);
         m_chooser.addOption("Shoot; Do Nothing", m_robotContainer.m_ShootDoNothing);
 
+        m_chooser.addOption("Right Side Shoot; Rush", m_robotContainer.m_RightShootRush);
+        m_chooser.addOption("Right Side Shoot; Shoot", m_robotContainer.m_RightSideShootShoot);
         m_chooser.addOption("Right Side Shoot; Piece", m_robotContainer.m_RightSideShootPiece);
         m_chooser.addOption("Right Side Shoot; Mobility", m_robotContainer.m_RightShootMobility);
         m_chooser.addOption("Right Side Shoot; Correct", m_robotContainer.m_RightShootCorrect);
         
+        m_chooser.addOption("Left Side Shoot; Rush", m_robotContainer.m_LeftSideShootRush);
+        m_chooser.addOption("Left Side Shoot; Shoot", m_robotContainer.m_LeftSideShootShoot);
         m_chooser.addOption("Left Side Shoot; Piece", m_robotContainer.m_LeftSideShootPiece);
         m_chooser.addOption("Left Side Shoot; Mobility", m_robotContainer.m_LeftShootMobility);
         m_chooser.addOption("Left Side Shoot; Correct", m_robotContainer.m_LeftShootCorrect);

@@ -129,6 +129,8 @@ public class Constants {
             public static final double SideMobility = 80*inchToSpeedless;
             public static final double SidePieceSlant = 60*inchToSpeedless;
             public static final double SidePieceSpikeMark = 60*inchToSpeedless;
+
+            public static final double RushToCenterLine = 248*inchToSpeedless;
         }
         public static final double Turn60 = 0.65;
     }

@@ -19,25 +19,22 @@ import frc.robot.commands.IntakeBackwardCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
-public class ShootShootShoot extends SequentialCommandGroup {
+public class CenterShoot extends SequentialCommandGroup {
     public double speed;
     public double dist_to_note;
-    public double side_dist;
 
-    public ShootShootShoot(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+    public CenterShoot(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
         speed = Constants.Autonomous.autoSpeed;
         dist_to_note = (Constants.Autonomous.Speaker_Front.SpeakerToSpikeMark/speed);
-        side_dist = (Constants.Autonomous.Speaker_Front.SpikeMarkToSpikeMark/speed);
 
         addCommands(
             new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(0, -speed), 0, false).withTimeout(side_dist),
+                new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, false).withTimeout(dist_to_note),
                 new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
                 new SequentialCommandGroup(
-                    new IntakeBackwardCommand(m_esophagus).withTimeout(0.2),
+                    new IntakeBackwardCommand(m_esophagus).withTimeout(0.1),
                     new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1))),
-            new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, false).withTimeout(dist_to_note),
-            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.5)
+            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7)
         );
     }
 }

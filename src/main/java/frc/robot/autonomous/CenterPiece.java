@@ -18,11 +18,11 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
-public class ShootPiece extends SequentialCommandGroup {
+public class CenterPiece extends SequentialCommandGroup {
     public double speed;
     public double dist_to_note;
 
-    public ShootPiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+    public CenterPiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
         speed = Constants.Autonomous.autoSpeed;
         dist_to_note = (Constants.Autonomous.Speaker_Front.SpeakerToSpikeMark/speed);
 
