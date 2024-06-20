@@ -18,16 +18,23 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
-public class SideMobility extends SequentialCommandGroup {
+public class RedAmpDoNothing extends SequentialCommandGroup {
     public double speed;
-    public double mobility_dist;
+    public double intial_dist;
+    public double wall_dist;
 
-    public SideMobility(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+    public RedAmpDoNothing(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
         speed = Constants.Autonomous.autoSpeed;
-        mobility_dist = (Constants.Autonomous.Speaker_Side.SideMobility/speed);
+        intial_dist = (Constants.Autonomous.Amp.InitialAlign/speed);
+        wall_dist = (Constants.Autonomous.Amp.InitialToWall/speed);
 
         addCommands(
-            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(mobility_dist)
+            new InstantCommand(() -> m_gyro.fakeReset(90.0), m_gyro),
+            new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, false).withTimeout(wall_dist),
+            new ParallelCommandGroup(
+                new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(0.1),
+                new DriveCommand(m_driveSwerve, new Vector2(0, -speed), 0, false).withTimeout(intial_dist)),
+            new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(0.5),
         );
     }
 }

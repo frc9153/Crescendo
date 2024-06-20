@@ -26,14 +26,6 @@ public class Robot extends TimedRobot {
         m_chooser.setDefaultOption("Do NOTHING!", m_robotContainer.m_doNothing);
         // m_chooser.addOption("Test", m_robotContainer.m_test);
 
-        // m_chooser.addOption("(Red) Amp; Shoot", m_robotContainer.m_redAmpShoot);
-        // m_chooser.addOption("(Red) Amp; Piece", m_robotContainer.m_redAmpPiece);
-        // m_chooser.addOption("(Red) Amp; Do Nothing", m_robotContainer.m_redAmpAndDoNothing);
-
-        // m_chooser.addOption("(Blue) Amp; Shoot", m_robotContainer.m_blueAmpShoot);
-        // m_chooser.addOption("(Blue) Amp; Piece", m_robotContainer.m_blueAmpPiece);
-        // m_chooser.addOption("(Blue) Amp; Do Nothing", m_robotContainer.m_blueAmpAndDoNothing);
-
         m_chooser.addOption("Shoot; Shoot; Shoot; Shoot", m_robotContainer.m_ShootShootShootShoot);
         m_chooser.addOption("Shoot; Shoot; Shoot; Piece", m_robotContainer.m_ShootShootShootPiece);
         m_chooser.addOption("Shoot; Shoot; Right Shoot", m_robotContainer.m_ShootShootRightShoot);
@@ -56,7 +48,13 @@ public class Robot extends TimedRobot {
         m_chooser.addOption("Left Side Shoot; Mobility", m_robotContainer.m_LeftShootMobility);
         m_chooser.addOption("Left Side Shoot; Correct", m_robotContainer.m_LeftShootCorrect);
 
-        // m_chooser.addOption("Mobility", m_robotContainer.m_mobility);
+        m_chooser.addOption("(Red) Amp; Shoot", m_robotContainer.m_RedAmpShoot);
+        m_chooser.addOption("(Red) Amp; Piece", m_robotContainer.m_RedAmpPiece);
+        m_chooser.addOption("(Red) Amp; Do Nothing", m_robotContainer.m_RedAmpAndDoNothing);
+
+        m_chooser.addOption("(Blue) Amp; Shoot", m_robotContainer.m_BlueAmpShoot);
+        m_chooser.addOption("(Blue) Amp; Piece", m_robotContainer.m_BlueAmpPiece);
+        m_chooser.addOption("(Blue) Amp; Do Nothing", m_robotContainer.m_BlueAmpAndDoNothing);
 
 
         SmartDashboard.putData("Autonomous Routine", m_chooser);

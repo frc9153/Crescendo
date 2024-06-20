@@ -18,21 +18,26 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
-public class RightSidePiece extends SequentialCommandGroup {
+public class RedAmpPiece extends SequentialCommandGroup {
     public double speed;
-    public double slant_dist;
-    public double spike_dist;
+    public double seperate_dist;
+    public double align_dist;
+    public double dist_to_note;
 
-    public RightSidePiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+    public RedAmpPiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
         speed = Constants.Autonomous.autoSpeed;
-        slant_dist = (Constants.Autonomous.Speaker_Side.SidePieceSlant/speed);
-        spike_dist = (Constants.Autonomous.Speaker_Side.SidePieceSpikeMark/speed);
+        seperate_dist = (Constants.Autonomous.Amp.SeperateFromWall/speed);
+        backward_dist = (Constants.Autonomous.Amp.InitialAlign/speed);
+        dist_to_note = (Constants.Autonomous.Amp.AlignPieceToPiece/speed);
 
         addCommands(
-            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(slant_dist),
-            new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(Constants.Autonomous.Turn60),
             new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(spike_dist),
+                new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
+                new DriveCommand(m_driveSwerve, new Vector2(0, speed), 0, false).withTimeout(seperate_dist)),
+            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(backward_dist),
+            new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(Constants.Autonomous.Turn90),
+            new ParallelCommandGroup(
+                new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(dist_to_note),
                 new SequentialCommandGroup(
                     new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
                     new IntakeCommand(m_esophagus).withTimeout(Constants.Autonomous.IntakeGiveUp)))

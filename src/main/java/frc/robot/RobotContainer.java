@@ -168,7 +168,7 @@ public class RobotContainer {
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new LeftSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
-    public final Command m_LeftSideShootPiece = new SequentialCommandGroup(
+    public final Command m_LeftSideShootShoot = new SequentialCommandGroup(
         new LeftSideHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new LeftSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
@@ -179,6 +179,30 @@ public class RobotContainer {
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new SideMobility(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new LeftSideRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_RedAmpDoNothing = new SequentialCommandGroup(
+        new RedAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_RedAmpPiece = new SequentialCommandGroup(
+        new RedAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new RedAmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_RedAmpShoot = new SequentialCommandGroup(
+        new RedAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new RedAmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new LeftSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_BlueAmpDoNothing = new SequentialCommandGroup(
+        new BlueAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_BlueAmpPiece = new SequentialCommandGroup(
+        new BlueAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new BlueAmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_BlueAmpShoot = new SequentialCommandGroup(
+        new BlueAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new BlueAmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new RightSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
 
     public RobotContainer() {

@@ -24,7 +24,7 @@ public class RightSideRush extends SequentialCommandGroup {
 
     public RightSideRush(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
         speed = Constants.Autonomous.autoSpeed;
-        rush_dist = (Constants.Autonomous.Speaker_Front.RushToCenterLine/speed);
+        rush_dist = (Constants.Autonomous.Speaker_Side.RushToCenterLine/speed);
 
         addCommands(
             new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(Constants.Autonomous.Turn60),

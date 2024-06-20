@@ -25,8 +25,8 @@ public class LeftSidePiece extends SequentialCommandGroup {
 
     public LeftSidePiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
         speed = Constants.Autonomous.autoSpeed;
-        slant_dist = (Constants.Autonomous.Speaker_Front.SidePieceSlant/speed);
-        spike_dist = (Constants.Autonomous.Speaker_Front.SidePieceSpikeMark/speed);
+        slant_dist = (Constants.Autonomous.Speaker_Side.SidePieceSlant/speed);
+        spike_dist = (Constants.Autonomous.Speaker_Side.SidePieceSpikeMark/speed);
 
         addCommands(
             new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(slant_dist),
@@ -35,7 +35,7 @@ public class LeftSidePiece extends SequentialCommandGroup {
                 new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(spike_dist),
                 new SequentialCommandGroup(
                     new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-                    new IntakeCommand(m_esophagus).withTimeout(2.0)))
+                    new IntakeCommand(m_esophagus).withTimeout(Constants.Autonomous.IntakeGiveUp)))
         );
     }
 }

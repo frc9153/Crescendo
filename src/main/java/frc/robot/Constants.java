@@ -125,14 +125,25 @@ public class Constants {
             public static final double SpeakerToSpikeMark = 80*inchToSpeedless; // Speedless measure
             public static final double SpikeMarkToSpikeMark = 70*inchToSpeedless;
             // (SpeakerFrontFudgeDistance)
-
+        }
+        public class Speaker_Side {
             public static final double SideMobility = 80*inchToSpeedless;
             public static final double SidePieceSlant = 60*inchToSpeedless;
             public static final double SidePieceSpikeMark = 60*inchToSpeedless;
 
             public static final double RushToCenterLine = 248*inchToSpeedless;
         }
+        public class Amp {
+            public static final double InitialToWall = 40*inchToSpeedless;
+            public static final double InitialAlign = 56*inchToSpeedless;
+
+            public static final double SeperateFromWall = 16*inchToSpeedless;
+            public static final double WallToAlignPiece = 80*inchToSpeedless;
+        }
         public static final double Turn60 = 0.65;
+        public static final double Turn90 = 1.2;
+
+        public static final double IntakeGiveUp = 2.0;
     }
 
     public class Drive {//4.8

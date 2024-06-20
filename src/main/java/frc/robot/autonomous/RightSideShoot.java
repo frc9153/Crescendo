@@ -25,8 +25,8 @@ public class RightSideShoot extends SequentialCommandGroup {
 
     public RightSideShoot(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
         speed = Constants.Autonomous.autoSpeed;
-        slant_dist = (Constants.Autonomous.Speaker_Front.SidePieceSlant/speed);
-        spike_dist = (Constants.Autonomous.Speaker_Front.SidePieceSpikeMark/speed);
+        slant_dist = (Constants.Autonomous.Speaker_Side.SidePieceSlant/speed);
+        spike_dist = (Constants.Autonomous.Speaker_Side.SidePieceSpikeMark/speed);
 
         addCommands(
             new ParallelCommandGroup(

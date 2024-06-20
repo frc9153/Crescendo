@@ -31,7 +31,7 @@ public class CenterPiece extends SequentialCommandGroup {
                 new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(dist_to_note),
                 new SequentialCommandGroup(
                     new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-                    new IntakeCommand(m_esophagus).withTimeout(2.0)))
+                    new IntakeCommand(m_esophagus).withTimeout(Constants.Autonomous.IntakeGiveUp)))
         );
     }
 }
