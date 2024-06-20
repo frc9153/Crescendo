@@ -16,11 +16,11 @@ import frc.robot.commands.WindThenScore;
 import frc.robot.commands.UpDownCommand;
 import frc.robot.Constants;
 
-public class RightSideHeadingCorrect extends SequentialCommandGroup {
+public class SideHeadingCorrect extends SequentialCommandGroup {
 
-    public RightSideHeadingCorrect(TransformableGyro m_gyro) {
+    public SideHeadingCorrect(TransformableGyro m_gyro, double right_or_left) {
         addCommands(
-            new InstantCommand(() -> m_gyro.fakeReset(60.0), m_gyro),
+            new InstantCommand(() -> m_gyro.fakeReset(60.0*right_or_left), m_gyro),
         );
     }
 }

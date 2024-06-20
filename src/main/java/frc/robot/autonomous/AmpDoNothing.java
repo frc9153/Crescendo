@@ -18,17 +18,23 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
-public class RightSideRush extends SequentialCommandGroup {
+public class AmpDoNothing extends SequentialCommandGroup {
     public double speed;
-    public double rush_dist;
+    public double intial_dist;
+    public double wall_dist;
 
-    public RightSideRush(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+    public AmpDoNothing(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus, double red_or_blue) {
         speed = Constants.Autonomous.autoSpeed;
-        rush_dist = (Constants.Autonomous.Speaker_Side.RushToCenterLine/speed);
+        intial_dist = (Constants.Autonomous.Amp.InitialAlign/speed);
+        wall_dist = (Constants.Autonomous.Amp.InitialToWall/speed);
 
         addCommands(
-            new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(Constants.Autonomous.Turn60),
-            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(rush_dist)
+            new InstantCommand(() -> m_gyro.fakeReset(90.0*red_or_blue), m_gyro),
+            new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, false).withTimeout(wall_dist),
+            new ParallelCommandGroup(
+                new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(0.1),
+                new DriveCommand(m_driveSwerve, new Vector2(0, -speed*red_or_blue), 0, false).withTimeout(intial_dist)),
+            new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(0.5),
         );
     }
 }

@@ -18,23 +18,24 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
-public class BlueAmpRush extends SequentialCommandGroup {
+public class SidePiece extends SequentialCommandGroup {
     public double speed;
-    public double seperate_dist;
-    public double rush_dist;
+    public double slant_dist;
+    public double spike_dist;
 
-    public BlueAmpRush(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+    public SidePiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus, double right_or_left) {
         speed = Constants.Autonomous.autoSpeed;
-        seperate_dist = (Constants.Autonomous.Amp.RushSeperate/speed);
-        rush_dist = (Constants.Autonomous.Amp.RushToCenterLine/speed);
+        slant_dist = (Constants.Autonomous.Speaker_Side.SidePieceSlant/speed);
+        spike_dist = (Constants.Autonomous.Speaker_Side.SidePieceSpikeMark/speed);
 
         addCommands(
+            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(slant_dist),
+            new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5*right_or_left, false).withTimeout(Constants.Autonomous.Turn60),
             new ParallelCommandGroup(
+                new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(spike_dist),
                 new SequentialCommandGroup(
-                    new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(seperate_dist),
-                    new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(Constants.Autonomous.Turn90),
-                    new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(rush_dist)),
-                new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT))
+                    new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
+                    new IntakeCommand(m_esophagus).withTimeout(Constants.Autonomous.IntakeGiveUp)))
         );
     }
 }

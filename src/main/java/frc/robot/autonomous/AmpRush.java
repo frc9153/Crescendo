@@ -18,24 +18,23 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
-public class RightSidePiece extends SequentialCommandGroup {
+public class AmpRush extends SequentialCommandGroup {
     public double speed;
-    public double slant_dist;
-    public double spike_dist;
+    public double seperate_dist;
+    public double rush_dist;
 
-    public RightSidePiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+    public AmpRush(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus, double red_or_blue) {
         speed = Constants.Autonomous.autoSpeed;
-        slant_dist = (Constants.Autonomous.Speaker_Side.SidePieceSlant/speed);
-        spike_dist = (Constants.Autonomous.Speaker_Side.SidePieceSpikeMark/speed);
+        seperate_dist = (Constants.Autonomous.Amp.RushSeperate/speed);
+        rush_dist = (Constants.Autonomous.Amp.RushToCenterLine/speed);
 
         addCommands(
-            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(slant_dist),
-            new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(Constants.Autonomous.Turn60),
             new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(spike_dist),
                 new SequentialCommandGroup(
-                    new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-                    new IntakeCommand(m_esophagus).withTimeout(Constants.Autonomous.IntakeGiveUp)))
+                    new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(seperate_dist),
+                    new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5*red_or_blue, false).withTimeout(Constants.Autonomous.Turn90),
+                    new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(rush_dist)),
+                new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT))
         );
     }
 }

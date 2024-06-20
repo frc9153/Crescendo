@@ -121,6 +121,12 @@ public class Constants {
         
         public static final double inchToSpeedless = 0.0042;
 
+        public static final double redSide = 1.0;
+        public static final double blueSide = -1.0;
+        
+        public static final double rightSide = 1.0;
+        public static final double leftSide = -1.0;
+
         public class Speaker_Front {
             public static final double SpeakerToSpikeMark = 80*inchToSpeedless; // Speedless measure
             public static final double SpikeMarkToSpikeMark = 70*inchToSpeedless;

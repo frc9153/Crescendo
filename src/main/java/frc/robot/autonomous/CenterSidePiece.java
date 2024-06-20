@@ -15,29 +15,28 @@ import frc.robot.commands.WindThenScore;
 import frc.robot.commands.UpDownCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.IntakeBackwardCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
-public class CenterLeftShoot extends SequentialCommandGroup {
+public class CenterSidePiece extends SequentialCommandGroup {
     public double speed;
     public double dist_to_note;
     public double side_dist;
 
-    public CenterLeftShoot(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+    public CenterSidePiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus, double right_or_left) {
         speed = Constants.Autonomous.autoSpeed;
         dist_to_note = (Constants.Autonomous.Speaker_Front.SpeakerToSpikeMark/speed);
         side_dist = (Constants.Autonomous.Speaker_Front.SpikeMarkToSpikeMark/speed);
 
         addCommands(
+            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(0.2),
             new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(0, speed), 0, false).withTimeout(side_dist),
-                new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
+                new DriveCommand(m_driveSwerve, new Vector2(0, speed*right_or_left), 0, false).withTimeout(side_dist),
                 new SequentialCommandGroup(
-                    new IntakeBackwardCommand(m_esophagus).withTimeout(0.1),
-                    new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1))),
-            new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, false).withTimeout(dist_to_note),
-            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.5)
+                    new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE))),
+            new ParallelCommandGroup(
+                new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(dist_to_note),
+                new IntakeCommand(m_esophagus).withTimeout(Constants.Autonomous.IntakeGiveUp))
         );
     }
 }

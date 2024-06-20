@@ -18,12 +18,12 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 
-public class LeftSideShoot extends SequentialCommandGroup {
+public class SideShoot extends SequentialCommandGroup {
     public double speed;
     public double slant_dist;
     public double spike_dist;
 
-    public LeftSideShoot(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus) {
+    public SideShoot(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus, double right_or_left) {
         speed = Constants.Autonomous.autoSpeed;
         slant_dist = (Constants.Autonomous.Speaker_Side.SidePieceSlant/speed);
         spike_dist = (Constants.Autonomous.Speaker_Side.SidePieceSpikeMark/speed);
@@ -35,7 +35,7 @@ public class LeftSideShoot extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                     new IntakeBackwardCommand(m_esophagus).withTimeout(0.2),
                     new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1))),
-            new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(Constants.Autonomous.Turn60),
+            new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5*right_or_left, false).withTimeout(Constants.Autonomous.Turn60),
             new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, false).withTimeout(slant_dist),
             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.5)
         );
