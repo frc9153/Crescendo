@@ -33,6 +33,12 @@ import frc.robot.autonomous.LeftSideShoot;
 import frc.robot.autonomous.RightSideRush;
 import frc.robot.autonomous.LeftSideRush;
 import frc.robot.autonomous.SideMobility;
+import frc.robot.autonomous.RedAmpDoNothing;
+import frc.robot.autonomous.RedAmpPiece;
+import frc.robot.autonomous.RedAmpRush;
+import frc.robot.autonomous.BlueAmpDoNothing;
+import frc.robot.autonomous.BlueAmpPiece;
+import frc.robot.autonomous.BlueAmpRush;
 import frc.robot.commands.AmpThenScore;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.FancyDriveCommand;
@@ -192,6 +198,10 @@ public class RobotContainer {
         new RedAmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new LeftSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
+    public final Command m_RedAmpRush = new SequentialCommandGroup(
+        new RedAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new RedAmpRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
     public final Command m_BlueAmpDoNothing = new SequentialCommandGroup(
         new BlueAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
@@ -203,6 +213,10 @@ public class RobotContainer {
         new BlueAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new BlueAmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new RightSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_BlueAmpRush = new SequentialCommandGroup(
+        new BlueAmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new BlueAmpRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
 
     public RobotContainer() {

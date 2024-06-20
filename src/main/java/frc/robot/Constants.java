@@ -139,6 +139,9 @@ public class Constants {
 
             public static final double SeperateFromWall = 16*inchToSpeedless;
             public static final double WallToAlignPiece = 80*inchToSpeedless;
+            
+            public static final double RushSeperate = 8*inchToSpeedless;
+            public static final double RushToCenterLine = 248*inchToSpeedless;
         }
         public static final double Turn60 = 0.65;
         public static final double Turn90 = 1.2;

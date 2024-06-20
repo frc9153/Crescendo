@@ -33,8 +33,8 @@ public class RedAmpPiece extends SequentialCommandGroup {
         addCommands(
             new ParallelCommandGroup(
                 new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-                new DriveCommand(m_driveSwerve, new Vector2(0, speed), 0, false).withTimeout(seperate_dist)),
-            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(backward_dist),
+                new DriveCommand(m_driveSwerve, new Vector2(0, speed), 0, false).withTimeout(backward_dist)),
+            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(seperate_dist),
             new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(Constants.Autonomous.Turn90),
             new ParallelCommandGroup(
                 new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(dist_to_note),
