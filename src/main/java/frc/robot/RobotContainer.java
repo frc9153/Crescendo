@@ -18,12 +18,18 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.UpDownForever.Setpoint;
 import frc.robot.autonomous.ShootDoNothing;
-import frc.robot.autonomous.ShootPiece;
-import frc.robot.autonomous.ShootShoot;
-import frc.robot.autonomous.ShootShootPiece;
-import frc.robot.autonomous.ShootShootShoot;
-import frc.robot.autonomous.ShootShootShootPiece;
-import frc.robot.autonomous.ShootShootShootShoot;
+import frc.robot.autonomous.CenterPiece;
+import frc.robot.autonomous.CenterShoot;
+import frc.robot.autonomous.CenterSidePiece;
+import frc.robot.autonomous.CenterSideShoot;
+import frc.robot.autonomous.SideHeadingCorrect;
+import frc.robot.autonomous.SidePiece;
+import frc.robot.autonomous.SideShoot;
+import frc.robot.autonomous.SideRush;
+import frc.robot.autonomous.SideMobility;
+import frc.robot.autonomous.AmpDoNothing;
+import frc.robot.autonomous.AmpPiece;
+import frc.robot.autonomous.AmpRush;
 import frc.robot.commands.AmpThenScore;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.FancyDriveCommand;
@@ -32,6 +38,7 @@ import frc.robot.commands.KidSafeWindThenScore;
 import frc.robot.commands.ManualUpDownCommand;
 import frc.robot.commands.UpDownCommand;
 import frc.robot.commands.WindThenScore;
+import frc.robot.commands.BooleanTriggeredManualUpDownCommand;
 import frc.robot.subsystems.Archerfish;
 import frc.robot.subsystems.Climbing;
 import frc.robot.subsystems.DriveSwerve;
@@ -62,271 +69,146 @@ public class RobotContainer {
 
     // Drive Command is Vector2(forward, side)
     public final Command m_doNothing = Commands.none();
-    //     public final Command m_test = new SequentialCommandGroup(
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new FancyDriveCommand(m_driveSwerve, new Vector2(0.05, 0.05)));
-    //     public final Command m_redAmpShoot = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(90.0), m_gyro),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(0.5),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, -0.3363), 0, false).withTimeout(0.7),
-    //             new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(1.0),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0.3363), 0, false).withTimeout(0.2),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.65),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(1.2),
-    //             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.3),
-    //             new ParallelCommandGroup(
-    //                     new IntakeCommand(m_esophagus).withTimeout(1.5),
-    //                     new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.5)),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT), // *
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(1.3),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0.3363), 0, false).withTimeout(0.8),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.1),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(0.5),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(2.5) // *
-    //     );
-    //     public final Command m_redAmpPiece = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(90.0), m_gyro),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(0.5),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, -0.3363), 0, false).withTimeout(0.7),
-    //             new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(1.0),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0.3363), 0, false).withTimeout(0.2),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.7),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(1.2),
-    //             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.3),
-    //             new ParallelCommandGroup(new IntakeCommand(m_esophagus).withTimeout(1.5),
-    //                     new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.5)));
-    //     public final Command m_redAmpAndDoNothing = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(90.0), m_gyro),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(0.5),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, -0.3363), 0, false).withTimeout(0.7),
-    //             new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(1.0),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT));
-    
-    //     public final Command m_blueAmpShoot = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(-90.0), m_gyro),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(0.5),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0.3363), 0, false).withTimeout(0.7),
-    //             new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(1.0),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, -0.3363), 0, false).withTimeout(0.2),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.65),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(1.2),
-    //             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.3),
-    //             new ParallelCommandGroup(new IntakeCommand(m_esophagus).withTimeout(1.5),
-    //                     new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.5)),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(1.3),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, -0.3363), 0, false).withTimeout(0.8),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.1),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(0.5),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(2.5));
-    //     public final Command m_blueAmpPiece = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(-90.0), m_gyro),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(0.5),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0.3363), 0, false).withTimeout(0.7),
-    //             new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(1.0),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, -0.3363), 0, false).withTimeout(0.2),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.7),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(1.2),
-    //             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.3),
-    //             new ParallelCommandGroup(new IntakeCommand(m_esophagus).withTimeout(1.5),
-    //                     new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.5)));
-    //     public final Command m_blueAmpAndDoNothing = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(-90.0), m_gyro),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(0.5),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0.3363), 0, false).withTimeout(0.7),
-    //             new AmpThenScore(m_upDown, m_archerfish, m_esophagus).withTimeout(1.0),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT));
-    
-    //     public final Command m_ShootShoot = new SequentialCommandGroup(
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-    //             new WaitCommand(0.7),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.5),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new WaitCommand(0.5),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.3),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.7),
-    //             new ParallelCommandGroup(new IntakeCommand(m_esophagus).withTimeout(1.5),
-    //                     new SequentialCommandGroup(new WaitCommand(0.5),
-    //                     new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.0))),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new DriveCommand(m_driveSwerve, new Vector2(-0.3363, 0), 0, false).withTimeout(1.2),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(2.5));
-    //     public final Command m_ShootPiece = new SequentialCommandGroup(
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-    //             new WaitCommand(0.7),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.5),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new WaitCommand(0.5),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.3),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.7),
-    //             new ParallelCommandGroup(new IntakeCommand(m_esophagus).withTimeout(1.5),
-    //                     new SequentialCommandGroup(new WaitCommand(0.5),
-    //                     new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.0))),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT));
-    //     public final Command m_ShootAndDoNothing = new SequentialCommandGroup(
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-    //             new WaitCommand(0.7),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.5),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new WaitCommand(0.5),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.3));
-    
-    //     public final Command m_rightShootMobility = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(60.0), m_gyro),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-    //             new WaitCommand(0.7),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.5),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new WaitCommand(0.5),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(0.65),
-    //             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.0));
-    //     public final Command m_rightShootCorrect = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(60.0), m_gyro),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-    //             new WaitCommand(0.7),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.5),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new WaitCommand(0.5),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7));
-    //             //new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
-    //             //new DriveCommand(m_driveSwerve, new Vector2(0, 0), -0.5, false).withTimeout(0.65),
-    //             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
-    //     public final Command m_leftShootMobility = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(60.0), m_gyro),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-    //             new WaitCommand(0.7),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.5),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new WaitCommand(0.5),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.65),
-    //             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.0));
-    //     public final Command m_leftShootCorrect = new SequentialCommandGroup(
-    //             new InstantCommand(() -> m_gyro.fakeReset(-60.0), m_gyro),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-    //             new WaitCommand(0.7),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.5),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new WaitCommand(0.5),
-    //             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7));
-    //             //new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(0.5),
-    //             //new DriveCommand(m_driveSwerve, new Vector2(0, 0), 0.5, false).withTimeout(0.65),
-    //             //new InstantCommand(() -> m_driveSwerve.zeroHeading(), m_driveSwerve));
-    
-    //     public final Command m_mobility = new SequentialCommandGroup(
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-    //             new WaitCommand(0.7),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             new WaitCommand(0.5),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new WaitCommand(0.5),
-    //             new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.5)
-    //     );
-    
-    //     public final Command m_shootCommandPiece = new SequentialCommandGroup(
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.AMP),
-    //             new WaitCommand(0.7),
-    //             // new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-    //             // new WaitCommand(0.7),
-    //             new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-    //             new ParallelCommandGroup(new InstantCommand(() -> m_archerfish.startSpin(), m_archerfish),
-    //                     new WaitCommand(2.0)),
-    //             new ParallelCommandGroup(new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
-    //                     new WaitCommand(0.7)),
-    //             new ParallelCommandGroup(new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus),
-    //                     new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish)),
-    //             new ParallelCommandGroup(new InstantCommand(() -> m_archerfish.slowSpin(), m_archerfish),
-    //                     new WaitCommand(2.0)),
-    //             new InstantCommand(() -> m_archerfish.stopSpin(), m_archerfish));
-    
-    //     public final Command m_FutureShootPiece = new SequentialCommandGroup(
-            //     m_shootCommandPiece,
-            //     new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
-            //     new InstantCommand(() -> m_esophagus.startFeeding(), m_esophagus),
-            //     new DriveCommand(m_driveSwerve, new Vector2(0.3363, 0), 0, false).withTimeout(1.8),
-            //     new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus),
-            //     new ParallelCommandGroup(new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
-            //             new InstantCommand(() -> m_esophagus.startReverse(), m_esophagus),
-            //             new WaitCommand(0.2)),
-            //     new InstantCommand(() -> m_esophagus.stopFeeding(), m_esophagus)
-            // );
-    
-        public final Command m_ShootDoNothing = new SequentialCommandGroup(
-            new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
-        );
-        public final Command m_ShootPiece = new SequentialCommandGroup(
-            new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
-        );
-        public final Command m_ShootShoot = new SequentialCommandGroup(
-            new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
-        );
-        public final Command m_ShootShootPiece = new SequentialCommandGroup(
-            new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
-        );
-        public final Command m_ShootShootShoot = new SequentialCommandGroup(
-            new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
-        );
-        public final Command m_ShootShootShootPiece = new SequentialCommandGroup(
-            new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
-        );
-        public final Command m_ShootShootShootShoot = new SequentialCommandGroup(
-            new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootShootPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
-            new ShootShootShootShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
-        );
 
+    public final Command m_ShootDoNothing = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_ShootPiece = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_ShootShoot = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_ShootShootRightPiece = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide)
+    );
+    public final Command m_ShootShootRightShoot = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide),
+        new CenterSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide)
+    );
+    public final Command m_ShootShootLeftPiece = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
+    );
+    public final Command m_ShootShootLeftShoot = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide),
+        new CenterSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
+    );
+    public final Command m_ShootShootShootPiece = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide),
+        new CenterSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide),
+        new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
+    );
+    public final Command m_ShootShootShootShoot = new SequentialCommandGroup(
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide),
+        new CenterSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide),
+        new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide),
+        new CenterSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
+    );
+    public final Command m_RightSideShootCorrect = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.rightSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_RightSideShootMobility = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.rightSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SideMobility(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_RightSideShootPiece = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.rightSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide)
+    );
+    public final Command m_RightSideShootShoot = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.rightSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide),
+        new SideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide)
+    );
+    public final Command m_RightSideShootRush = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.rightSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SideMobility(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SideRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide)
+    );
+    public final Command m_LeftSideShootCorrect = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.leftSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_LeftSideShootMobility = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.leftSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SideMobility(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
+    );
+    public final Command m_LeftSideShootPiece = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.leftSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
+    );
+    public final Command m_LeftSideShootShoot = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.leftSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide),
+        new SideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
+    );
+    public final Command m_LeftSideShootRush = new SequentialCommandGroup(
+        new SideHeadingCorrect(m_gyro, Constants.Autonomous.leftSide),
+        new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SideMobility(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
+        new SideRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
+    );
+    public final Command m_RedAmpDoNothing = new SequentialCommandGroup(
+        new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide)
+    );
+    public final Command m_RedAmpPiece = new SequentialCommandGroup(
+        new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide),
+        new AmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide)
+    );
+    public final Command m_RedAmpShoot = new SequentialCommandGroup(
+        new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide),
+        new AmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide),
+        new SideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
+    );
+    public final Command m_RedAmpRush = new SequentialCommandGroup(
+        new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide),
+        new AmpRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide)
+    );
+    public final Command m_BlueAmpDoNothing = new SequentialCommandGroup(
+        new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide)
+    );
+    public final Command m_BlueAmpPiece = new SequentialCommandGroup(
+        new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide),
+        new AmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide)
+    );
+    public final Command m_BlueAmpShoot = new SequentialCommandGroup(
+        new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide),
+        new AmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide),
+        new SideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide)
+    );
+    public final Command m_BlueAmpRush = new SequentialCommandGroup(
+        new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide),
+        new AmpRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide)
+    );
 
     public RobotContainer() {
         System.out.println("HELLO ; We are starting");
@@ -420,6 +302,10 @@ public class RobotContainer {
         climberPullButton3.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
         climberPushButton.onTrue(new InstantCommand(() -> m_climber.startUnclimb(), m_climber));
         climberPushButton.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
+
+        // Double check this with the driver station before running anything
+        Trigger manualArmTrigger = m_operatorController.button(Constants.HID.Operator.manualArmTriggerButton);
+        manualArmTrigger.whileTrue(new BooleanTriggeredManualUpDownCommand(m_upDown, () -> -m_operatorController.getX(), () -> manualArmTrigger));
         climberPushButton2.onTrue(new InstantCommand(() -> m_climber.startUnclimb(), m_climber));
         climberPushButton2.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
         climberPushButton3.onTrue(new InstantCommand(() -> m_climber.startUnclimb(), m_climber));
