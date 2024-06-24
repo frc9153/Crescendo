@@ -43,18 +43,6 @@ public class Constants {
         }
     }
 
-    public class Autonomous {
-        public static final double autoSpeed = 0.45;
-        
-        public static final double inchToSpeedless = 0.0042;
-
-        public class Speaker_Front {
-            public static final double SpeakerToSpikeMark = 80*inchToSpeedless; // Speedless measure
-            public static final double SpikeMarkToSpikeMark = 80*inchToSpeedless;
-            public static final double FudgeFromFrontSpeaker = 5*inchToSpeedless;
-        }
-    }
-
     public class Climbing {
         public static final int leftMotorId = 12;
         public static final int rightMotorId = 13;
@@ -147,7 +135,8 @@ public class Constants {
 
         public class Speaker_Front {
             public static final double SpeakerToSpikeMark = 80*inchToSpeedless; // Speedless measure
-            public static final double SpikeMarkToSpikeMark = 70*inchToSpeedless;
+            public static final double SpikeMarkToSpikeMark = 80*inchToSpeedless;
+            public static final double FudgeFromFrontSpeaker = 5*inchToSpeedless;
             // (SpeakerFrontFudgeDistance)
         }
         public class Speaker_Side {

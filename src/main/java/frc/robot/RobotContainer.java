@@ -304,8 +304,8 @@ public class RobotContainer {
         climberPushButton.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
 
         // Double check this with the driver station before running anything
-        Trigger manualArmTrigger = m_operatorController.button(Constants.HID.Operator.manualArmTriggerButton);
-        manualArmTrigger.whileTrue(new BooleanTriggeredManualUpDownCommand(m_upDown, () -> -m_operatorController.getX(), () -> manualArmTrigger));
+        Trigger manualArmTrigger = m_operatorController.button(Constants.HID.Binds.Operator.manualArmTriggerButton);
+        manualArmTrigger.whileTrue(new BooleanTriggeredManualUpDownCommand(m_upDown, () -> -m_operatorController.getLeftX(), () -> manualArmTrigger.getAsBoolean()));
         climberPushButton2.onTrue(new InstantCommand(() -> m_climber.startUnclimb(), m_climber));
         climberPushButton2.onFalse(new InstantCommand(() -> m_climber.stopClimb(), m_climber));
         climberPushButton3.onTrue(new InstantCommand(() -> m_climber.startUnclimb(), m_climber));

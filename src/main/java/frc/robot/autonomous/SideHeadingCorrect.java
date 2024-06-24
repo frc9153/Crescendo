@@ -4,23 +4,15 @@
 
 package frc.robot.autonomous;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.subsystems.DriveSwerve;
-import frc.robot.subsystems.UpAndDownForever;
-import frc.robot.subsystems.Archerfish;
-import frc.robot.subsystems.Esophagus;
 import frc.robot.subsystems.TransformableGyro;
-import frc.robot.commands.WindThenScore;
-import frc.robot.commands.UpDownCommand;
-import frc.robot.Constants;
 
 public class SideHeadingCorrect extends SequentialCommandGroup {
 
     public SideHeadingCorrect(TransformableGyro m_gyro, double right_or_left) {
         addCommands(
-            new InstantCommand(() -> m_gyro.fakeReset(60.0*right_or_left), m_gyro),
+            new InstantCommand(() -> m_gyro.fakeReset(60.0*right_or_left), m_gyro)
         );
     }
 }

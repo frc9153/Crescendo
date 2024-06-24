@@ -34,7 +34,7 @@ public class CenterShoot extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                     new IntakeBackwardCommand(m_esophagus).withTimeout(0.1),
                     new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1))),
-            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.7)
+            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.8)
         );
     }
 }

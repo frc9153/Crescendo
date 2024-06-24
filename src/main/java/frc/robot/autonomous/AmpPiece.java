@@ -21,14 +21,14 @@ import frc.robot.Constants;
 public class AmpPiece extends SequentialCommandGroup {
     public double speed;
     public double seperate_dist;
-    public double align_dist;
+    public double backward_dist;
     public double dist_to_note;
 
     public AmpPiece(DriveSwerve m_driveSwerve, UpAndDownForever m_upDown, Archerfish m_archerfish, Esophagus m_esophagus, double red_or_blue) {
         speed = Constants.Autonomous.autoSpeed;
         seperate_dist = (Constants.Autonomous.Amp.SeperateFromWall/speed);
         backward_dist = (Constants.Autonomous.Amp.InitialAlign/speed);
-        dist_to_note = (Constants.Autonomous.Amp.AlignPieceToPiece/speed);
+        dist_to_note = (Constants.Autonomous.Amp.WallToAlignPiece/speed);
 
         addCommands(
             new ParallelCommandGroup(

@@ -37,28 +37,28 @@ public class Robot extends TimedRobot {
         m_chooser.addOption("Shoot; Do Nothing", m_robotContainer.m_ShootDoNothing);
 
         // Someday, maybe: Right Side Shoot; Rush; Piece
-        m_chooser.addOption("Right Side Shoot; Rush", m_robotContainer.m_RightShootRush);
+        m_chooser.addOption("Right Side Shoot; Rush", m_robotContainer.m_RightSideShootRush);
         m_chooser.addOption("Right Side Shoot; Shoot", m_robotContainer.m_RightSideShootShoot);
         m_chooser.addOption("Right Side Shoot; Piece", m_robotContainer.m_RightSideShootPiece);
-        m_chooser.addOption("Right Side Shoot; Mobility", m_robotContainer.m_RightShootMobility);
-        m_chooser.addOption("Right Side Shoot; Correct", m_robotContainer.m_RightShootCorrect);
+        m_chooser.addOption("Right Side Shoot; Mobility", m_robotContainer.m_RightSideShootMobility);
+        m_chooser.addOption("Right Side Shoot; Correct", m_robotContainer.m_RightSideShootCorrect);
         
         // Someday, maybe: Left Side Shoot; Rush; Piece
         m_chooser.addOption("Left Side Shoot; Rush", m_robotContainer.m_LeftSideShootRush);
         m_chooser.addOption("Left Side Shoot; Shoot", m_robotContainer.m_LeftSideShootShoot);
         m_chooser.addOption("Left Side Shoot; Piece", m_robotContainer.m_LeftSideShootPiece);
-        m_chooser.addOption("Left Side Shoot; Mobility", m_robotContainer.m_LeftShootMobility);
-        m_chooser.addOption("Left Side Shoot; Correct", m_robotContainer.m_LeftShootCorrect);
+        m_chooser.addOption("Left Side Shoot; Mobility", m_robotContainer.m_LeftSideShootMobility);
+        m_chooser.addOption("Left Side Shoot; Correct", m_robotContainer.m_LeftSideShootCorrect);
 
         m_chooser.addOption("(Red) Amp; Rush", m_robotContainer.m_RedAmpRush);
         m_chooser.addOption("(Red) Amp; Left Shoot", m_robotContainer.m_RedAmpShoot);
         m_chooser.addOption("(Red) Amp; Piece", m_robotContainer.m_RedAmpPiece);
-        m_chooser.addOption("(Red) Amp; Do Nothing", m_robotContainer.m_RedAmpAndDoNothing);
+        m_chooser.addOption("(Red) Amp; Do Nothing", m_robotContainer.m_RedAmpDoNothing);
 
         m_chooser.addOption("(Blue) Amp; Rush", m_robotContainer.m_BlueAmpRush);
         m_chooser.addOption("(Blue) Amp; Right Shoot", m_robotContainer.m_BlueAmpShoot);
         m_chooser.addOption("(Blue) Amp; Piece", m_robotContainer.m_BlueAmpPiece);
-        m_chooser.addOption("(Blue) Amp; Do Nothing", m_robotContainer.m_BlueAmpAndDoNothing);
+        m_chooser.addOption("(Blue) Amp; Do Nothing", m_robotContainer.m_BlueAmpDoNothing);
 
 
         SmartDashboard.putData("Autonomous Routine", m_chooser);

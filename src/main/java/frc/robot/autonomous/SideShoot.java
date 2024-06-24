@@ -14,7 +14,7 @@ import frc.robot.subsystems.Esophagus;
 import frc.robot.commands.WindThenScore;
 import frc.robot.commands.UpDownCommand;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeBackwardCommand;
 import frc.robot.utils.Vector2;
 import frc.robot.Constants;
 

@@ -4,18 +4,18 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.UpAndDownForever;
 
-public class ManualUpDownCommand extends Command {
+public class BooleanTriggeredManualUpDownCommand extends Command {
   private final UpAndDownForever m_upDown;
   private final DoubleSupplier m_speed;
   private final BooleanSupplier m_canRun;
 
-  public ManualUpDownCommand(UpAndDownForever upDown, DoubleSupplier speed, BooleanSupplier canRun) {
+  public BooleanTriggeredManualUpDownCommand(UpAndDownForever upDown, DoubleSupplier speed, BooleanSupplier canRun) {
     m_upDown = upDown;
     m_speed = speed;
     m_canRun = canRun;
@@ -25,24 +25,24 @@ public class ManualUpDownCommand extends Command {
 
   @Override
   public void initialize() {
-    if (m_canRun) {
+    if (m_canRun.getAsBoolean()) {
         m_upDown.setSpeed(m_speed.getAsDouble());
     }else {
         // This constant was not pushed on the computer I built this on.
         // Implement this later
-        system.out.println("Implement me! (BooleanTriggeredManualUpDownCommand, stopfromFallingSpeed)");
+        System.out.println("Implement me! (BooleanTriggeredManualUpDownCommand, stopfromFallingSpeed)");
         //m_upDown.setSpeed(Constants.UpAndDownForever.stopFromFalligSpeed);
     }
   }
 
   @Override
   public void execute() {
-    if (m_canRun) {
+    if (m_canRun.getAsBoolean()) {
         m_upDown.setSpeed(m_speed.getAsDouble());
     }else {
         // This constant was not pushed on the computer I built this on.
         // Implement this later
-        system.out.println("Implement me! (BooleanTriggeredManualUpDownCommand, stopfromFallingSpeed)");
+        System.out.println("Implement me! (BooleanTriggeredManualUpDownCommand, stopfromFallingSpeed)");
         //m_upDown.setSpeed(Constants.UpAndDownForever.stopFromFalligSpeed);
     }
   }

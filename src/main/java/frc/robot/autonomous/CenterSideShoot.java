@@ -37,7 +37,7 @@ public class CenterSideShoot extends SequentialCommandGroup {
                     new IntakeBackwardCommand(m_esophagus).withTimeout(0.1),
                     new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1))),
             new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, false).withTimeout(dist_to_note),
-            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.5)
+            new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.6)
         );
     }
 }
