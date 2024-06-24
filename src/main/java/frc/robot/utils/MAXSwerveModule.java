@@ -102,6 +102,9 @@ public class MAXSwerveModule {
         m_drivingSparkMax.setSmartCurrentLimit(Constants.Drive.SwerveModule.drivingMotorCurrentLimit);
         m_turningSparkMax.setSmartCurrentLimit(Constants.Drive.SwerveModule.turningMotorCurrentLimit);
 
+        m_drivingSparkMax.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_turningSparkMax.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
         // operation, it will maintain the above configurations.
         m_drivingSparkMax.burnFlash();

@@ -100,7 +100,23 @@ public class Archerfish extends SubsystemBase {
         // if (m_filter.calculate(m_targetSpeed) == m_targetSpeed) {
         //     return true;
         // }
+        if (m_targetVelocity == 0.0) {
+            return false;
+        }
         if (Math.abs(m_fireMotorEncoder.getVelocity() - m_targetVelocity) < Constants.Archerfish.archerfishPIDEpsilon) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isNearSpeed() {
+        // if (m_filter.calculate(m_targetSpeed) == m_targetSpeed) {
+        //     return true;
+        // }
+        if (m_targetVelocity == 0.0) {
+            return false;
+        }
+        if (Math.abs(m_fireMotorEncoder.getVelocity() - m_targetVelocity) < Constants.Archerfish.archerfishPIDNearSpeedEpsilon) {
             return true;
         }
         return false;
@@ -117,5 +133,7 @@ public class Archerfish extends SubsystemBase {
         SmartDashboard.putNumber("Archerfish Speed", m_fireMotorEncoder.getVelocity());
         SmartDashboard.putNumber("Archerfish Target", m_targetVelocity);
         SmartDashboard.putNumber("Archerfish Applied Voltage", m_fireMotor.getAppliedOutput());
+        SmartDashboard.putBoolean("Archerfish at Speed", isAtSpeed());
+        SmartDashboard.putBoolean("Archerfish near Speed", isNearSpeed());
     }
 }

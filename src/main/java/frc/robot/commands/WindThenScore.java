@@ -13,10 +13,15 @@ public class WindThenScore extends Command {
     Archerfish m_archerfish;
     Esophagus m_esophagus;
     long start_time;
+    boolean reached_speed;
+    boolean has_shot;
 
     public WindThenScore(Archerfish archerfish, Esophagus esophagus) {
         m_archerfish = archerfish;
         m_esophagus = esophagus;
+
+        reached_speed = false;
+        has_shot = false;
         
         addRequirements(archerfish, esophagus);
     }
@@ -36,20 +41,27 @@ public class WindThenScore extends Command {
                 System.out.println(System.currentTimeMillis()-start_time);
                 start_time = -1;
             }
+            reached_speed = true;
             m_esophagus.startFeeding();
+        }else if (!m_archerfish.isAtSpeed() && reached_speed) {
+            has_shot = true;
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         m_esophagus.stopFeeding();
-        if (m_archerfish.isAtSpeed()) {
+        if (has_shot || reached_speed) {
             m_archerfish.stopSpin();
         }
     }
 
     @Override
     public boolean isFinished() {
+        // if (has_shot && m_archerfish.isAtSpeed()) {
+        //     System.out.println("Mayday!!");
+        // }
+        // return (has_shot && m_archerfish.isAtSpeed());
         return false;
     }
 }
