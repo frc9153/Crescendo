@@ -31,12 +31,12 @@ public class CenterSideShoot extends SequentialCommandGroup {
 
         addCommands(
             new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(0, -speed*right_or_left), 0, false).withTimeout(side_dist),
+                new DriveCommand(m_driveSwerve, new Vector2(0, -speed*right_or_left), 0, true).withTimeout(side_dist*0.95),
                 new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.SHOOT),
                 new SequentialCommandGroup(
                     new IntakeBackwardCommand(m_esophagus).withTimeout(0.1),
                     new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.1))),
-            new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, false).withTimeout(dist_to_note),
+            new DriveCommand(m_driveSwerve, new Vector2(-speed, 0), 0, true).withTimeout(dist_to_note),
             new WindThenScore(m_archerfish, m_esophagus).withTimeout(0.6)
         );
     }

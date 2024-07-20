@@ -28,8 +28,10 @@ import frc.robot.autonomous.SideShoot;
 import frc.robot.autonomous.SideRush;
 import frc.robot.autonomous.SideMobility;
 import frc.robot.autonomous.AmpDoNothing;
+import frc.robot.autonomous.AmpHeadingCorrect;
 import frc.robot.autonomous.AmpPiece;
 import frc.robot.autonomous.AmpRush;
+import frc.robot.autonomous.CenterHeadingCorrect;
 import frc.robot.commands.AmpThenScore;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.FancyDriveCommand;
@@ -74,21 +76,25 @@ public class RobotContainer {
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
     public final Command m_ShootPiece = new SequentialCommandGroup(
+        new CenterHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
     public final Command m_ShootShoot = new SequentialCommandGroup(
+        new CenterHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus)
     );
     public final Command m_ShootShootRightPiece = new SequentialCommandGroup(
+        new CenterHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide)
     );
     public final Command m_ShootShootRightShoot = new SequentialCommandGroup(
+        new CenterHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
@@ -96,12 +102,14 @@ public class RobotContainer {
         new CenterSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide)
     );
     public final Command m_ShootShootLeftPiece = new SequentialCommandGroup(
+        new CenterHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
     );
     public final Command m_ShootShootLeftShoot = new SequentialCommandGroup(
+        new CenterHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
@@ -109,6 +117,7 @@ public class RobotContainer {
         new CenterSideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
     );
     public final Command m_ShootShootShootPiece = new SequentialCommandGroup(
+        new CenterHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
@@ -117,6 +126,7 @@ public class RobotContainer {
         new CenterSidePiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
     );
     public final Command m_ShootShootShootShoot = new SequentialCommandGroup(
+        new CenterHeadingCorrect(m_gyro),
         new ShootDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
         new CenterShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus),
@@ -178,34 +188,42 @@ public class RobotContainer {
         new SideRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
     );
     public final Command m_RedAmpDoNothing = new SequentialCommandGroup(
+        new AmpHeadingCorrect(m_gyro, Constants.Autonomous.redSide),
         new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide)
     );
     public final Command m_RedAmpPiece = new SequentialCommandGroup(
+        new AmpHeadingCorrect(m_gyro, Constants.Autonomous.redSide),
         new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide),
         new AmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide)
     );
     public final Command m_RedAmpShoot = new SequentialCommandGroup(
+        new AmpHeadingCorrect(m_gyro, Constants.Autonomous.redSide),
         new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide),
         new AmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide),
         new SideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.leftSide)
     );
     public final Command m_RedAmpRush = new SequentialCommandGroup(
+        new AmpHeadingCorrect(m_gyro, Constants.Autonomous.redSide),
         new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide),
         new AmpRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.redSide)
     );
     public final Command m_BlueAmpDoNothing = new SequentialCommandGroup(
+        new AmpHeadingCorrect(m_gyro, Constants.Autonomous.blueSide),
         new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide)
     );
     public final Command m_BlueAmpPiece = new SequentialCommandGroup(
+        new AmpHeadingCorrect(m_gyro, Constants.Autonomous.blueSide),
         new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide),
         new AmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide)
     );
     public final Command m_BlueAmpShoot = new SequentialCommandGroup(
+        new AmpHeadingCorrect(m_gyro, Constants.Autonomous.blueSide),
         new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide),
         new AmpPiece(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide),
         new SideShoot(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.rightSide)
     );
     public final Command m_BlueAmpRush = new SequentialCommandGroup(
+        new AmpHeadingCorrect(m_gyro, Constants.Autonomous.blueSide),
         new AmpDoNothing(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide),
         new AmpRush(m_driveSwerve, m_upDown, m_archerfish, m_esophagus, Constants.Autonomous.blueSide)
     );

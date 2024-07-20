@@ -6,6 +6,7 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.DriveSwerve;
 import frc.robot.subsystems.UpAndDownForever;
@@ -28,7 +29,9 @@ public class CenterPiece extends SequentialCommandGroup {
 
         addCommands(
             new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(dist_to_note),
+                new SequentialCommandGroup(
+                    new WaitCommand(0.2),
+                    new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, true).withTimeout(dist_to_note)),
                 new SequentialCommandGroup(
                     new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
                     new IntakeCommand(m_esophagus).withTimeout(Constants.Autonomous.IntakeGiveUp)))

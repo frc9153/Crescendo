@@ -68,9 +68,9 @@ public class Constants {
         public static final double setpointOffset = 0.0;// 
         public enum Setpoint {
             INTAKE(0.472+setpointOffset),
-            SHOOT(0.445+setpointOffset),
+            SHOOT(0.435+setpointOffset),
             START(0.280+setpointOffset),
-            AMP(0.232+setpointOffset);
+            AMP(0.217+setpointOffset);
 
             private final double targetPosition;
             private Setpoint(double targetPosition) {
@@ -101,7 +101,7 @@ public class Constants {
         public static final double archerfishD = 0.0;
         public static final double archerfishIZone = 0.0;
         public static final double archerfishFF = 0.00000481; // 0.15
-        public static final double archerfishMaxSpeed = 0.80;
+        public static final double archerfishMaxSpeed = 0.90;
         public static final double archerfishPIDEpsilon = 100; // rpm, so very high
         public static final double archerfishPIDNearSpeedEpsilon = 200; // rpm, so very high
 
@@ -134,8 +134,8 @@ public class Constants {
         public static final double leftSide = -1.0;
 
         public class Speaker_Front {
-            public static final double SpeakerToSpikeMark = 80*inchToSpeedless; // Speedless measure
-            public static final double SpikeMarkToSpikeMark = 80*inchToSpeedless;
+            public static final double SpeakerToSpikeMark = 100*inchToSpeedless; // Speedless measure
+            public static final double SpikeMarkToSpikeMark = 95*inchToSpeedless;
             public static final double FudgeFromFrontSpeaker = 5*inchToSpeedless;
             // (SpeakerFrontFudgeDistance)
         }

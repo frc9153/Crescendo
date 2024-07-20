@@ -6,6 +6,7 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.DriveSwerve;
 import frc.robot.subsystems.UpAndDownForever;
@@ -29,14 +30,15 @@ public class CenterSidePiece extends SequentialCommandGroup {
         side_dist = (Constants.Autonomous.Speaker_Front.SpikeMarkToSpikeMark/speed);
 
         addCommands(
-            new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(0.2),
+            // new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(0.2),
             new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(0, speed*right_or_left), 0, false).withTimeout(side_dist),
                 new SequentialCommandGroup(
-                    new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE))),
-            new ParallelCommandGroup(
-                new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, false).withTimeout(dist_to_note),
-                new IntakeCommand(m_esophagus).withTimeout(Constants.Autonomous.IntakeGiveUp))
+                    new DriveCommand(m_driveSwerve, new Vector2(speed*0.325, speed*right_or_left), 0, true).withTimeout(side_dist*0.65*Math.sqrt(2)),
+                    new WaitCommand(0.3),
+                    new DriveCommand(m_driveSwerve, new Vector2(speed, 0), 0, true).withTimeout(dist_to_note-(side_dist*0.5))),
+                new SequentialCommandGroup(
+                    new UpDownCommand(m_upDown, Constants.UpDownForever.Setpoint.INTAKE),
+                    new IntakeCommand(m_esophagus).withTimeout(Constants.Autonomous.IntakeGiveUp+0.5)))
         );
     }
 }
