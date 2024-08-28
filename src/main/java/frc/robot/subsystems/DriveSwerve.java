@@ -25,6 +25,8 @@ public class DriveSwerve extends SubsystemBase {
                         Constants.Drive.CAN.frontLeftSteerId,
                         Constants.Drive.Chassis.frontLeftChassisAngularOffset);
 
+        // This wheel is modified to run on a 14T pinion while the others are on a 13T !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // Not anymore
         private final MAXSwerveModule m_frontRight = new MAXSwerveModule(
                         Constants.Drive.CAN.frontRightThrustId,
                         Constants.Drive.CAN.frontRightSteerId,
@@ -127,6 +129,7 @@ public class DriveSwerve extends SubsystemBase {
                 SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Drive.maxSpeedMetersPerSec);
 
                 m_frontLeft.setDesiredState(swerveModuleStates[0]);
+                // swerveModuleStates[1].speedMetersPerSecond *= 13.0/14.0;
                 m_frontRight.setDesiredState(swerveModuleStates[1]);
                 m_backLeft.setDesiredState(swerveModuleStates[2]);
                 m_backRight.setDesiredState(swerveModuleStates[3]);

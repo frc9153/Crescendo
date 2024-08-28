@@ -70,7 +70,7 @@ public class Constants {
             INTAKE(0.472+setpointOffset),
             SHOOT(0.435+setpointOffset),
             START(0.280+setpointOffset),
-            AMP(0.217+setpointOffset);
+            AMP(0.207+setpointOffset);
 
             private final double targetPosition;
             private Setpoint(double targetPosition) {
@@ -101,7 +101,7 @@ public class Constants {
         public static final double archerfishD = 0.0;
         public static final double archerfishIZone = 0.0;
         public static final double archerfishFF = 0.00000481; // 0.15
-        public static final double archerfishMaxSpeed = 0.90;
+        public static final double archerfishMaxSpeed = 1.00;
         public static final double archerfishPIDEpsilon = 100; // rpm, so very high
         public static final double archerfishPIDNearSpeedEpsilon = 200; // rpm, so very high
 
@@ -111,7 +111,7 @@ public class Constants {
         public static final double archerfishSpeedSlow = 0.3;//0.3
         
         // Velocity in rpm (new)
-        public static final double archerfishVelocity = 3700; // Dummy values, probably something more like 2000
+        public static final double archerfishVelocity = 4400; // Dummy values, probably something more like 2000
         public static final double archerfishVelocityChild = 2000;
         public static final double archerfishVelocitySlow = 1000;
     }
